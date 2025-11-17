@@ -1,301 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Reset Password</title>
-	<style>
-		body {
-			font-family: 'Arial', sans-serif;
-			margin: 0;
-			padding: 0;
-			height: 100vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background: linear-gradient(180deg, #2d1e72 0%, #4b4bb8 40%, #9bb0ff 100%);
-		}
-		.container {
-			width: 100%;
-			max-width: 420px;
-			text-align: center;
-			padding: 30px 20px;
-			box-sizing: border-box;
-		}
-		h2 { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: bold; }
-		.note { margin-top: 12px; color: #ffffff; font-size: 0.9rem; opacity: 0.9; }
-		.field {
-			margin-bottom: 10px;
-		}
-		input[type="password"] {
-			width: 100%;
-			padding: 14px;
-			border-radius: 12px;
-			border: none;
-			font-size: 1rem;
-			background: rgba(255,255,255,0.18);
-			color: #fff;
-			outline: none;
-			backdrop-filter: blur(5px);
-			box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
-			margin-bottom: 6px;
-			box-sizing: border-box;
-		}
-		.placeholder { color: #e0e0e0; }
-		button {
-			width: 100%;
-			padding: 14px;
-			margin-top: 8px;
-			background: #1b164e;
-			color: white;
-			border: none;
-			border-radius: 30px;
-			font-size: 1rem;
-			font-weight: bold;
-			cursor: pointer;
-			box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
-		}
-		button:hover { background: #0f0c31; }
-		.status {
-			margin-top: 12px;
-			color: #fff;
-			font-size: 0.95rem;
-			opacity: 0.95;
-			min-height: 1.2em;
-		}
-		.error { color: #ffb3b3; }
-		.success { color: #b6ffb6; }
-		.small { font-size: 0.85rem; opacity: 0.9; margin-top: 6px; color:#eaeaea;}
-		@media (max-width:480px) {
-			.container { padding: 18px; }
-			h2 { font-size: 1.3rem; }
-		}
-	</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reset Password</title>
+<style>
+	body {
+		font-family: 'Arial', sans-serif;
+		margin: 0;
+		padding: 0;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: linear-gradient(180deg, #2d1e72 0%, #4b4bb8 40%, #9bb0ff 100%);
+		position: relative;
+	}
+	.container {
+		width: 100%;
+		max-width: 420px;
+		text-align: center;
+		padding: 30px 20px;
+		box-sizing: border-box;
+		position: relative;
+		z-index: 1;
+	}
+	h2 { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: bold; }
+	.note { margin-top: 12px; color: #ffffff; font-size: 0.9rem; opacity: 0.9; }
+	.field {
+		margin-bottom: 15px;
+		position: relative;
+	}
+	input[type="password"], input[type="text"] {
+		width: 100%;
+		padding: 14px 40px 14px 14px;
+		border-radius: 12px;
+		border: none;
+		font-size: 1rem;
+		background: rgba(255,255,255,0.18);
+		color: #fff;
+		outline: none;
+		backdrop-filter: blur(5px);
+		box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
+		margin-bottom: 6px;
+		box-sizing: border-box;
+	}
+	.toggle-visibility {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+		color: #ffffffcc;
+		font-size: 1rem;
+		user-select: none;
+	}
+	button {
+		width: 100%;
+		padding: 14px;
+		margin-top: 8px;
+		background: #1b164e;
+		color: white;
+		border: none;
+		border-radius: 30px;
+		font-size: 1rem;
+		font-weight: bold;
+		cursor: pointer;
+		box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+		position: relative;
+		z-index: 1;
+	}
+	button:hover { background: #0f0c31; }
+	.status {
+		margin-top: 12px;
+		color: #fff;
+		font-size: 0.95rem;
+		opacity: 0;
+		min-height: 1.2em;
+		transition: opacity 0.5s;
+	}
+	.status.show { opacity: 1; }
+	.error { color: #ffb3b3; }
+	.success { color: #b6ffb6; }
+	.small { font-size: 0.85rem; opacity: 0.9; margin-top: 6px; color:#eaeaea;}
+
+	/* Spinner overlay */
+	.spinner-overlay {
+		position: fixed;
+		top: 0; left: 0;
+		width: 100%; height: 100%;
+		background: rgba(0,0,0,0.4);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 999;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s;
+	}
+	.spinner-overlay.show { opacity: 1; pointer-events: all; }
+	.spinner {
+		border: 5px solid rgba(255,255,255,0.3);
+		border-top: 5px solid #fff;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		animation: spin 1s linear infinite;
+	}
+	@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+	@media (max-width:480px) {
+		.container { padding: 18px; }
+		h2 { font-size: 1.3rem; }
+	}
+</style>
 </head>
 <body>
-	<div class="container">
-		<h2>Reset Password</h2>
-
-		<div id="info" class="note">Enter a new password below to reset your account.</div>
-
-		<div class="field">
-			<input id="newPwd" type="password" placeholder="New Password" autocomplete="new-password" />
-		</div>
-		<div class="field">
-			<input id="confirmPwd" type="password" placeholder="Confirm Password" autocomplete="new-password" />
-		</div>
-		<button id="resetBtn">Reset Password</button>
-
-		<div id="status" class="status"></div>
-		<div class="small">Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.</div>
+<div class="container">
+	<h2>Reset Password</h2>
+	<div id="info" class="note">Enter a new password below to reset your account.</div>
+	<div class="field">
+		<input id="newPwd" type="password" placeholder="New Password" autocomplete="new-password" />
+		<span class="toggle-visibility" data-target="newPwd">👁️</span>
 	</div>
+	<div class="field">
+		<input id="confirmPwd" type="password" placeholder="Confirm Password" autocomplete="new-password" />
+		<span class="toggle-visibility" data-target="confirmPwd">👁️</span>
+	</div>
+	<button id="resetBtn">Reset Password</button>
+	<div id="status" class="status"></div>
+	<div class="small">Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.</div>
+</div>
 
-	<!-- Supabase JS via CDN (v2) -->
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Spinner overlay -->
+<div class="spinner-overlay" id="spinnerOverlay">
+	<div class="spinner"></div>
+</div>
 
-	<script>
-		// -----------------------------
-		// CONFIG: your Supabase project
-		// -----------------------------
-		const SUPABASE_URL = "https://ubhxzdwtmpcmgixsdjpn.supabase.co";
-		const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViaHh6ZHd0bXBjbWdpeHNkanBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NzI2NjMsImV4cCI6MjA3MTQ0ODY2M30.XXmoROIenZKlcaQfTu8QCzhYeR2ddfNs0e7eYT_yXcM";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+	const SUPABASE_URL = "https://ubhxzdwtmpcmgixsdjpn.supabase.co";
+	const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViaHh6ZHd0bXBjbWdpeHNkanBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NzI2NjMsImV4cCI6MjA3MTQ0ODY2M30.XXmoROIenZKlcaQfTu8QCzhYeR2ddfNs0e7eYT_yXcM";
+	const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-		// create Supabase client
-		const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+	const newPwdInput = document.getElementById('newPwd');
+	const confirmPwdInput = document.getElementById('confirmPwd');
+	const resetBtn = document.getElementById('resetBtn');
+	const statusEl = document.getElementById('status');
+	const spinnerOverlay = document.getElementById('spinnerOverlay');
 
-		// UI refs
-		const newPwdInput = document.getElementById('newPwd');
-		const confirmPwdInput = document.getElementById('confirmPwd');
-		const resetBtn = document.getElementById('resetBtn');
-		const statusEl = document.getElementById('status');
-		const infoEl = document.getElementById('info');
+	const pwdPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-		// Regex for password validation (same as your current check)
-		const pwdPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-		// Helper: show status
-		function showStatus(text, kind = "") {
-			statusEl.textContent = text;
-			statusEl.className = 'status ' + (kind || '');
-		}
-
-		// Helper: parse query + hash parameters into an object
-		function parseParams() {
-			const params = {};
-			// query string
-			const qs = new URLSearchParams(window.location.search);
-			for (const [k, v] of qs.entries()) params[k] = v;
-			// hash (support both #a=b&c=d and #access_token=...)
-			if (window.location.hash) {
-				const hash = window.location.hash.replace(/^#/, '');
-				// If hash contains '=' treat as querypairs, else ignore
-				if (hash.includes('=')) {
-					const h = new URLSearchParams(hash);
-					for (const [k, v] of h.entries()) params[k] = v;
-				}
-			}
-			return params;
-		}
-
-		// -----------------------------
-		// Attempt to open app via deep link
-		// -----------------------------
-		function tryOpenAppWithParams(params) {
-			try {
-				// Build param string preserving existing params
-				const qs = new URLSearchParams(params).toString();
-				const deep = "myapp://reset" + (qs ? ("?" + qs) : "");
-				// User agent heuristics: on mobile only
-				// Create a short-lived iframe for older Android WebViews, but use direct location for others.
-				const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-				// We'll detect page visibility change to know if the app opened.
-				let opened = false;
-
-				function visibilityHandler() {
-					// If page becomes hidden, assume the app opened
-					if (document.hidden) opened = true;
-				}
-				document.addEventListener('visibilitychange', visibilityHandler);
-
-				// Use a timestamp + timeout to decide fallback
-				const start = Date.now();
-				if (isMobile && /Android/i.test(navigator.userAgent)) {
-					// try iframe approach for some Android webviews
-					const iframe = document.createElement('iframe');
-					iframe.style.display = 'none';
-					iframe.src = deep;
-					document.body.appendChild(iframe);
-					setTimeout(() => { iframe.remove(); }, 1200);
-				} else {
-					// Try location change (iOS/modern browsers)
-					window.location.href = deep;
-				}
-
-				return new Promise((resolve) => {
-					// wait up to 1400ms for visibility change
-					setTimeout(() => {
-						document.removeEventListener('visibilitychange', visibilityHandler);
-						if (opened) resolve(true);
-						else resolve(false);
-					}, 1400);
-				});
-			} catch (err) {
-				console.warn('Deep link attempt failed', err);
-				return Promise.resolve(false);
-			}
-		}
-
-		// -----------------------------
-		// Main recovery logic (web fallback)
-		// -----------------------------
-		async function handleWebRecoveryFlow(params) {
-			showStatus('Processing recovery link...', '');
-			// Two common cases:
-			// 1) access_token present (often in hash or query) => setAuth and call updateUser
-			// 2) code present (auth code) => exchangeCodeForSession then updateUser
-			try {
-				// prefer access_token
-				if (params.access_token) {
-					// set session
-					await supabase.auth.setAuth(params.access_token);
-					showStatus('Authenticated via access token. Enter new password below.', ''); 
-					enableForm();
-					return;
-				}
-
-				// older/newer flows might give "code"
-				if (params.code) {
-					const { data, error } = await supabase.auth.exchangeCodeForSession(params.code);
-					if (error) throw error;
-					// session set automatically in supabase client
-					showStatus('Session created. Enter new password below.', '');
-					enableForm();
-					return;
-				}
-
-				// If none found, show message
-				showStatus('No valid reset token was found in the URL. Make sure you clicked the correct reset link.', 'error');
-				disableForm();
-			} catch (err) {
-				console.error('Recovery flow error:', err);
-				showStatus('Error processing token: ' + (err.message || JSON.stringify(err)), 'error');
-				disableForm();
-			}
-		}
-
-		// enable/disable form controls
-		function enableForm() {
-			resetBtn.disabled = false;
-			newPwdInput.disabled = false;
-			confirmPwdInput.disabled = false;
-		}
-		function disableForm() {
-			resetBtn.disabled = true;
-			newPwdInput.disabled = true;
-			confirmPwdInput.disabled = true;
-		}
-		disableForm(); // disabled until token/session is ready
-
-		// When user submits a new password
-		resetBtn.addEventListener('click', async () => {
-			showStatus('');
-			const p = newPwdInput.value.trim();
-			const c = confirmPwdInput.value.trim();
-
-			if (!pwdPattern.test(p)) {
-				showStatus('Password does not meet requirements.', 'error');
-				return;
-			}
-			if (p !== c) {
-				showStatus('Passwords do not match.', 'error');
-				return;
-			}
-			// call supabase update user
-			showStatus('Updating password...', '');
-			try {
-				const { data, error } = await supabase.auth.updateUser({ password: p });
-				if (error) {
-					throw error;
-				}
-				showStatus('Password updated successfully! You can now log in from the app.', 'success');
-				// optional: clear fields
-				newPwdInput.value = '';
-				confirmPwdInput.value = '';
-			} catch (err) {
-				console.error('updateUser error', err);
-				showStatus('Failed to update password: ' + (err.message || JSON.stringify(err)), 'error');
-			}
+	document.querySelectorAll('.toggle-visibility').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const target = document.getElementById(btn.dataset.target);
+			const isHidden = target.type === 'password';
+			target.type = isHidden ? 'text' : 'password';
+			btn.textContent = isHidden ? '👁️‍🗨️' : '👁️'; // change icon
 		});
+	});
 
-		// -----------------------------
-		// Initialization on page load
-		// -----------------------------
-		(async function init() {
-			showStatus('');
-			// Parse incoming params (query + hash)
-			const params = parseParams();
+	function showStatus(msg, kind=""){
+		statusEl.textContent = msg;
+		statusEl.className = "status show "+kind;
+		// fade out after 3s
+		setTimeout(()=> statusEl.classList.remove('show'), 3000);
+	}
 
-			// If there are no relevant params, enable form for manual use? we'll show message
-			if (!params.access_token && !params.code && !params.type) {
-				showStatus('No reset token detected. If you opened this page from the email link, try again. Otherwise, request a password reset from the app or website.', 'error');
-				// decide whether to enable manual form -- for security, keep disabled until token present
-				disableForm();
+	function showSpinner(show){
+		if(show) spinnerOverlay.classList.add('show');
+		else spinnerOverlay.classList.remove('show');
+	}
+
+	function parseParams(){
+		const params = {};
+		const qs = new URLSearchParams(window.location.search);
+		for (const [k,v] of qs.entries()) params[k]=v;
+		if(window.location.hash){
+			const hash = window.location.hash.replace(/^#/,'');
+			if(hash.includes('=')){
+				const h = new URLSearchParams(hash);
+				for(const [k,v] of h.entries()) params[k]=v;
+			}
+		}
+		return params;
+	}
+
+	async function tryOpenAppWithParams(params){
+		try{
+			const qs = new URLSearchParams(params).toString();
+			const deep = "myapp://reset"+(qs?"?"+qs:"");
+			let opened=false;
+			function visHandler(){if(document.hidden) opened=true;}
+			document.addEventListener('visibilitychange',visHandler);
+			const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+			if(isMobile && /Android/i.test(navigator.userAgent)){
+				const iframe=document.createElement('iframe');
+				iframe.style.display='none';
+				iframe.src=deep;
+				document.body.appendChild(iframe);
+				setTimeout(()=>iframe.remove(),1200);
+			}else{window.location.href=deep;}
+			return new Promise(resolve=>{
+				setTimeout(()=>{
+					document.removeEventListener('visibilitychange',visHandler);
+					resolve(opened);
+				},1400);
+			});
+		}catch(err){console.warn(err); return false;}
+	}
+
+	async function handleWebRecoveryFlow(params){
+		showStatus('Processing recovery link...');
+		try{
+			if(params.access_token){
+				await supabase.auth.setAuth(params.access_token);
+				showStatus('Enter new password below.');
+				enableForm();
 				return;
 			}
-
-			// Attempt to deep link to app with full params.
-			// If app opened, we should *not* proceed with web reset.
-			const opened = await tryOpenAppWithParams(params);
-			if (opened) {
-				// App opened — stop web flow
-				showStatus('App opened — continuing in the app.', ''); 
-				disableForm();
+			if(params.code){
+				const {data,error}=await supabase.auth.exchangeCodeForSession(params.code);
+				if(error) throw error;
+				showStatus('Session created. Enter new password below.');
+				enableForm();
 				return;
 			}
+			showStatus('No valid reset token found.', 'error');
+			disableForm();
+		}catch(err){
+			console.error(err);
+			showStatus('Error: '+(err.message||JSON.stringify(err)),'error');
+			disableForm();
+		}
+	}
 
-			// App did not open — continue with web password reset flow
-			await handleWebRecoveryFlow(params);
-		})();
-	</script>
+	function enableForm(){resetBtn.disabled=false; newPwdInput.disabled=false; confirmPwdInput.disabled=false;}
+	function disableForm(){resetBtn.disabled=true; newPwdInput.disabled=true; confirmPwdInput.disabled=true;}
+	disableForm();
+
+	resetBtn.addEventListener('click', async ()=>{
+		const p=newPwdInput.value.trim();
+		const c=confirmPwdInput.value.trim();
+		if(!pwdPattern.test(p)){showStatus('Password does not meet requirements.','error'); return;}
+		if(p!==c){showStatus('Passwords do not match.','error'); return;}
+		showSpinner(true);
+		showStatus('Updating password...');
+		try{
+			const {data,error}=await supabase.auth.updateUser({password:p});
+			if(error) throw error;
+			showStatus('Password updated successfully!', 'success');
+			newPwdInput.value=''; confirmPwdInput.value='';
+		}catch(err){
+			console.error(err);
+			showStatus('Failed: '+(err.message||JSON.stringify(err)),'error');
+		} finally {
+			showSpinner(false);
+		}
+	});
+
+	(async function init(){
+		const params=parseParams();
+		if(!params.access_token && !params.code && !params.type){
+			showStatus('No reset token detected.', 'error');
+			disableForm(); return;
+		}
+		const opened=await tryOpenAppWithParams(params);
+		if(opened){showStatus('App opened — continuing there.'); disableForm(); return;}
+		await handleWebRecoveryFlow(params);
+	})();
+</script>
 </body>
 </html>
