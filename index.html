@@ -1,22 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reset Password</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #2d1e72 0%, #4b4bb8 40%, #9bb0ff 100%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .logo {
+      width: 200px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+
+    h2 {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    p {
+      color: #e5e5e5;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      outline: none;
+      backdrop-filter: blur(5px);
+      box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
+      margin-bottom: 12px;
+    }
+
+    input::placeholder {
+      color: #e0e0e0;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      background: #1b164e;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      background: #0f0c31;
+    }
+
+    .note {
+      margin-top: 15px;
+      color: #ffffff;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+</style>
 </head>
 <body>
-<h2>Open the app to reset your password</h2>
-<p>If the app is installed, it will open automatically. Otherwise, follow the instructions below.</p>
+  <div class="container">
+    <h2>Reset Password</h2>
 
-<script>
-    // Try to open the app via deep link
-    window.location.href = "myapp://reset";
+    <input type="password" placeholder="New Password" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" />
+    <input type="password" placeholder="Confirm Password" required />
+    <button>Reset Password</button>
 
-    // After 2 seconds, show fallback message
-    setTimeout(() => {
-        document.body.innerHTML += "<p>App not detected? Install the app or contact support to reset your password.</p>";
-    }, 2000);
-</script>
+    <div class="note">
+      Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.
+    </div>
+  </div>
+  <script>
+    const pwd = document.querySelector('input[placeholder="New Password"]');
+    const confirmPwd = document.querySelector('input[placeholder="Confirm Password"]');
+    const btn = document.querySelector('button');
+
+    let errorBox = document.createElement('div');
+    errorBox.style.color = '#ffb3b3';
+    errorBox.style.marginTop = '10px';
+    errorBox.style.fontSize = '0.9rem';
+    document.querySelector('.container').appendChild(errorBox);
+
+    btn.addEventListener('click', function () {
+      errorBox.textContent = '';
+
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!pattern.test(pwd.value)) {
+        errorBox.textContent = 'Password does not meet requirements.';
+        return;
+      }
+
+      if (pwd.value !== confirmPwd.value) {
+        errorBox.textContent = 'Passwords do not match.';
+        return;
+      }
+
+      errorBox.textContent = '';
+      alert('Password reset successful!');
+    });
+  </script>
 </body>
 </html>
