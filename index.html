@@ -94,7 +94,7 @@
         font-size: 1.3rem;
       }
     }
-</style>
+  </style>
 </head>
 <body>
   <div class="container">
@@ -108,7 +108,24 @@
       Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.
     </div>
   </div>
+
   <script>
+    // --- Deep link logic ---
+    (function() {
+      const appScheme = "myapp://reset";
+      const now = Date.now();
+
+      // Try to open the app
+      window.location = appScheme;
+
+      // Fallback to website (we're already here) after 1.5s
+      setTimeout(() => {
+        console.log("App not detected, staying on website.");
+        // Could show a message: "App not installed, reset here."
+      }, 1500);
+    })();
+
+    // --- Password reset logic ---
     const pwd = document.querySelector('input[placeholder="New Password"]');
     const confirmPwd = document.querySelector('input[placeholder="Confirm Password"]');
     const btn = document.querySelector('button');
