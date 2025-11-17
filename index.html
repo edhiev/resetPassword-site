@@ -1,142 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reset Password</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(180deg, #2d1e72 0%, #4b4bb8 40%, #9bb0ff 100%);
-    }
-
-    .container {
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      padding: 30px 20px;
-    }
-
-    .logo {
-      width: 200px;
-      margin: 0 auto 20px;
-      display: block;
-    }
-
-    h2 {
-      color: #ffffff;
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    p {
-      color: #e5e5e5;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
-
-    input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.25);
-      color: #fff;
-      outline: none;
-      backdrop-filter: blur(5px);
-      box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
-      margin-bottom: 12px;
-    }
-
-    input::placeholder {
-      color: #e0e0e0;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      background: #1b164e;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
-    }
-
-    button:hover {
-      background: #0f0c31;
-    }
-
-    .note {
-      margin-top: 15px;
-      color: #ffffff;
-      font-size: 0.85rem;
-      opacity: 0.8;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 20px 15px;
-      }
-
-      h2 {
-        font-size: 1.3rem;
-      }
-    }
-</style>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Reset Password</title>
+	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: linear-gradient(180deg, #2d1e72 0%, #4b4bb8 40%, #9bb0ff 100%);
+		}
+		.container {
+			width: 100%;
+			max-width: 420px;
+			text-align: center;
+			padding: 30px 20px;
+			box-sizing: border-box;
+		}
+		h2 { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: bold; }
+		.note { margin-top: 12px; color: #ffffff; font-size: 0.9rem; opacity: 0.9; }
+		.field {
+			margin-bottom: 10px;
+		}
+		input[type="password"] {
+			width: 100%;
+			padding: 14px;
+			border-radius: 12px;
+			border: none;
+			font-size: 1rem;
+			background: rgba(255,255,255,0.18);
+			color: #fff;
+			outline: none;
+			backdrop-filter: blur(5px);
+			box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
+			margin-bottom: 6px;
+			box-sizing: border-box;
+		}
+		.placeholder { color: #e0e0e0; }
+		button {
+			width: 100%;
+			padding: 14px;
+			margin-top: 8px;
+			background: #1b164e;
+			color: white;
+			border: none;
+			border-radius: 30px;
+			font-size: 1rem;
+			font-weight: bold;
+			cursor: pointer;
+			box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+		}
+		button:hover { background: #0f0c31; }
+		.status {
+			margin-top: 12px;
+			color: #fff;
+			font-size: 0.95rem;
+			opacity: 0.95;
+			min-height: 1.2em;
+		}
+		.error { color: #ffb3b3; }
+		.success { color: #b6ffb6; }
+		.small { font-size: 0.85rem; opacity: 0.9; margin-top: 6px; color:#eaeaea;}
+		@media (max-width:480px) {
+			.container { padding: 18px; }
+			h2 { font-size: 1.3rem; }
+		}
+	</style>
 </head>
 <body>
-  <div class="container">
-    <h2>Reset Password</h2>
+	<div class="container">
+		<h2>Reset Password</h2>
 
-    <input type="password" placeholder="New Password" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" />
-    <input type="password" placeholder="Confirm Password" required />
-    <button>Reset Password</button>
+		<div id="info" class="note">Enter a new password below to reset your account.</div>
 
-    <div class="note">
-      Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.
-    </div>
-  </div>
-  <script>
-    const pwd = document.querySelector('input[placeholder="New Password"]');
-    const confirmPwd = document.querySelector('input[placeholder="Confirm Password"]');
-    const btn = document.querySelector('button');
+		<div class="field">
+			<input id="newPwd" type="password" placeholder="New Password" autocomplete="new-password" />
+		</div>
+		<div class="field">
+			<input id="confirmPwd" type="password" placeholder="Confirm Password" autocomplete="new-password" />
+		</div>
+		<button id="resetBtn">Reset Password</button>
 
-    let errorBox = document.createElement('div');
-    errorBox.style.color = '#ffb3b3';
-    errorBox.style.marginTop = '10px';
-    errorBox.style.fontSize = '0.9rem';
-    document.querySelector('.container').appendChild(errorBox);
+		<div id="status" class="status"></div>
+		<div class="small">Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.</div>
+	</div>
 
-    btn.addEventListener('click', function () {
-      errorBox.textContent = '';
+	<!-- Supabase JS via CDN (v2) -->
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	<script>
+		// -----------------------------
+		// CONFIG: your Supabase project
+		// -----------------------------
+		const SUPABASE_URL = "https://ubhxzdwtmpcmgixsdjpn.supabase.co";
+		const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViaHh6ZHd0bXBjbWdpeHNkanBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NzI2NjMsImV4cCI6MjA3MTQ0ODY2M30.XXmoROIenZKlcaQfTu8QCzhYeR2ddfNs0e7eYT_yXcM";
 
-      if (!pattern.test(pwd.value)) {
-        errorBox.textContent = 'Password does not meet requirements.';
-        return;
-      }
+		// create Supabase client
+		const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      if (pwd.value !== confirmPwd.value) {
-        errorBox.textContent = 'Passwords do not match.';
-        return;
-      }
+		// UI refs
+		const newPwdInput = document.getElementById('newPwd');
+		const confirmPwdInput = document.getElementById('confirmPwd');
+		const resetBtn = document.getElementById('resetBtn');
+		const statusEl = document.getElementById('status');
+		const infoEl = document.getElementById('info');
 
-      errorBox.textContent = '';
-      alert('Password reset successful!');
-    });
-  </script>
+		// Regex for password validation (same as your current check)
+		const pwdPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+		// Helper: show status
+		function showStatus(text, kind = "") {
+			statusEl.textContent = text;
+			statusEl.className = 'status ' + (kind || '');
+		}
+
+		// Helper: parse query + hash parameters into an object
+		function parseParams() {
+			const params = {};
+			// query string
+			const qs = new URLSearchParams(window.location.search);
+			for (const [k, v] of qs.entries()) params[k] = v;
+			// hash (support both #a=b&c=d and #access_token=...)
+			if (window.location.hash) {
+				const hash = window.location.hash.replace(/^#/, '');
+				// If hash contains '=' treat as querypairs, else ignore
+				if (hash.includes('=')) {
+					const h = new URLSearchParams(hash);
+					for (const [k, v] of h.entries()) params[k] = v;
+				}
+			}
+			return params;
+		}
+
+		// -----------------------------
+		// Attempt to open app via deep link
+		// -----------------------------
+		function tryOpenAppWithParams(params) {
+			try {
+				// Build param string preserving existing params
+				const qs = new URLSearchParams(params).toString();
+				const deep = "myapp://reset" + (qs ? ("?" + qs) : "");
+				// User agent heuristics: on mobile only
+				// Create a short-lived iframe for older Android WebViews, but use direct location for others.
+				const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+				// We'll detect page visibility change to know if the app opened.
+				let opened = false;
+
+				function visibilityHandler() {
+					// If page becomes hidden, assume the app opened
+					if (document.hidden) opened = true;
+				}
+				document.addEventListener('visibilitychange', visibilityHandler);
+
+				// Use a timestamp + timeout to decide fallback
+				const start = Date.now();
+				if (isMobile && /Android/i.test(navigator.userAgent)) {
+					// try iframe approach for some Android webviews
+					const iframe = document.createElement('iframe');
+					iframe.style.display = 'none';
+					iframe.src = deep;
+					document.body.appendChild(iframe);
+					setTimeout(() => { iframe.remove(); }, 1200);
+				} else {
+					// Try location change (iOS/modern browsers)
+					window.location.href = deep;
+				}
+
+				return new Promise((resolve) => {
+					// wait up to 1400ms for visibility change
+					setTimeout(() => {
+						document.removeEventListener('visibilitychange', visibilityHandler);
+						if (opened) resolve(true);
+						else resolve(false);
+					}, 1400);
+				});
+			} catch (err) {
+				console.warn('Deep link attempt failed', err);
+				return Promise.resolve(false);
+			}
+		}
+
+		// -----------------------------
+		// Main recovery logic (web fallback)
+		// -----------------------------
+		async function handleWebRecoveryFlow(params) {
+			showStatus('Processing recovery link...', '');
+			// Two common cases:
+			// 1) access_token present (often in hash or query) => setAuth and call updateUser
+			// 2) code present (auth code) => exchangeCodeForSession then updateUser
+			try {
+				// prefer access_token
+				if (params.access_token) {
+					// set session
+					await supabase.auth.setAuth(params.access_token);
+					showStatus('Authenticated via access token. Enter new password below.', ''); 
+					enableForm();
+					return;
+				}
+
+				// older/newer flows might give "code"
+				if (params.code) {
+					const { data, error } = await supabase.auth.exchangeCodeForSession(params.code);
+					if (error) throw error;
+					// session set automatically in supabase client
+					showStatus('Session created. Enter new password below.', '');
+					enableForm();
+					return;
+				}
+
+				// If none found, show message
+				showStatus('No valid reset token was found in the URL. Make sure you clicked the correct reset link.', 'error');
+				disableForm();
+			} catch (err) {
+				console.error('Recovery flow error:', err);
+				showStatus('Error processing token: ' + (err.message || JSON.stringify(err)), 'error');
+				disableForm();
+			}
+		}
+
+		// enable/disable form controls
+		function enableForm() {
+			resetBtn.disabled = false;
+			newPwdInput.disabled = false;
+			confirmPwdInput.disabled = false;
+		}
+		function disableForm() {
+			resetBtn.disabled = true;
+			newPwdInput.disabled = true;
+			confirmPwdInput.disabled = true;
+		}
+		disableForm(); // disabled until token/session is ready
+
+		// When user submits a new password
+		resetBtn.addEventListener('click', async () => {
+			showStatus('');
+			const p = newPwdInput.value.trim();
+			const c = confirmPwdInput.value.trim();
+
+			if (!pwdPattern.test(p)) {
+				showStatus('Password does not meet requirements.', 'error');
+				return;
+			}
+			if (p !== c) {
+				showStatus('Passwords do not match.', 'error');
+				return;
+			}
+			// call supabase update user
+			showStatus('Updating password...', '');
+			try {
+				const { data, error } = await supabase.auth.updateUser({ password: p });
+				if (error) {
+					throw error;
+				}
+				showStatus('Password updated successfully! You can now log in from the app.', 'success');
+				// optional: clear fields
+				newPwdInput.value = '';
+				confirmPwdInput.value = '';
+			} catch (err) {
+				console.error('updateUser error', err);
+				showStatus('Failed to update password: ' + (err.message || JSON.stringify(err)), 'error');
+			}
+		});
+
+		// -----------------------------
+		// Initialization on page load
+		// -----------------------------
+		(async function init() {
+			showStatus('');
+			// Parse incoming params (query + hash)
+			const params = parseParams();
+
+			// If there are no relevant params, enable form for manual use? we'll show message
+			if (!params.access_token && !params.code && !params.type) {
+				showStatus('No reset token detected. If you opened this page from the email link, try again. Otherwise, request a password reset from the app or website.', 'error');
+				// decide whether to enable manual form -- for security, keep disabled until token present
+				disableForm();
+				return;
+			}
+
+			// Attempt to deep link to app with full params.
+			// If app opened, we should *not* proceed with web reset.
+			const opened = await tryOpenAppWithParams(params);
+			if (opened) {
+				// App opened — stop web flow
+				showStatus('App opened — continuing in the app.', ''); 
+				disableForm();
+				return;
+			}
+
+			// App did not open — continue with web password reset flow
+			await handleWebRecoveryFlow(params);
+		})();
+	</script>
 </body>
 </html>
