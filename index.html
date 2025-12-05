@@ -165,11 +165,13 @@
     // ---------------------------------------------------------
     // 1. CONFIGURE SUPABASE
     // ---------------------------------------------------------
-    // REPLACE THESE WITH YOUR ACTUAL KEYS BEFORE UPLOADING
+    // REPLACE THESE WITH YOUR ACTUAL KEYS
     const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
     const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // FIX: We use a different variable name (supabaseClient) to avoid crashing
+    // Ensure the library is loaded from the window object
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // ---------------------------------------------------------
     // 2. UI REFERENCES
@@ -185,20 +187,22 @@
     // 3. LOGIC
     // ---------------------------------------------------------
     
-    // Check if the recovery link is valid immediately on load
-    supabase.auth.onAuthStateChange((event, session) => {
+    // Check session immediately
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
-        // Optional: You could show a "Ready to reset" toast here
         console.log("Recovery mode active.");
       } else if (!session) {
-        // If session is missing, likely invalid link
-        showMessage("This reset link is invalid or has expired.", "error");
-        setLoadingState(true); // Lock the form
-        btnText.textContent = "Link Expired";
+        // If testing locally without a link, this might trigger. 
+        // We will LOG it but NOT disable the button yet so you can test the UI prompts.
+        console.log("No session found (Link might be invalid or you are just testing UI).");
       }
     });
 
     resetBtn.addEventListener('click', async function () {
+      // DEBUG: This alert proves the button is connected!
+      // Once you see this popup, you can remove this line.
+      // alert("Button clicked! Code is running.");
+
       // 1. Clear previous messages
       hideMessage();
 
@@ -206,10 +210,16 @@
       const confirmPassword = confirmPassInput.value;
 
       // 2. Validation Logic
+      // Check if empty first
+      if (!newPassword || !confirmPassword) {
+        showMessage('Please fill in both password fields.', 'error');
+        return;
+      }
+
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
       if (!pattern.test(newPassword)) {
-        showMessage('Password must be at least 8 chars and include Uppercase, Lowercase, Number, and Symbol.', 'error');
+        showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol.', 'error');
         return;
       }
 
@@ -222,23 +232,21 @@
       setLoadingState(true);
 
       // 4. Supabase Update
-      const { data, error } = await supabase.auth.updateUser({ 
+      const { data, error } = await supabaseClient.auth.updateUser({ 
         password: newPassword 
       });
 
       // 5. Handle Result
       if (error) {
-        setLoadingState(false); // Re-enable form to try again
+        setLoadingState(false); 
+        console.error(error); // Verify details in browser console
         showMessage("Error: " + error.message, 'error');
       } else {
-        // Keep inputs disabled on success
         setLoadingState(true); 
         btnText.textContent = "Updated";
         btnSpinner.style.display = "none";
-        
         showMessage("Successfully changed password. You can now use this as your new password for your email.", 'success');
         
-        // Clear fields visually for security
         newPassInput.value = "";
         confirmPassInput.value = "";
       }
@@ -249,7 +257,6 @@
       messageBox.style.display = 'block';
       messageBox.textContent = text;
       
-      // Remove old classes and add new one
       messageBox.classList.remove('error-msg', 'success-msg');
       messageBox.classList.add(type === 'error' ? 'error-msg' : 'success-msg');
     }
@@ -262,21 +269,15 @@
     // Helper: Toggle Loading State
     function setLoadingState(isLoading) {
       if (isLoading) {
-        // Disable interactions
         newPassInput.disabled = true;
         confirmPassInput.disabled = true;
         resetBtn.disabled = true;
-        
-        // Show Spinner
         btnText.textContent = "Updating...";
         btnSpinner.style.display = "block";
       } else {
-        // Enable interactions
         newPassInput.disabled = false;
         confirmPassInput.disabled = false;
         resetBtn.disabled = false;
-        
-        // Hide Spinner
         btnText.textContent = "Update Password";
         btnSpinner.style.display = "none";
       }
@@ -284,3 +285,4 @@
   </script>
 </body>
 </html>
+
