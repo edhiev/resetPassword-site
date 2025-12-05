@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reset Password</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -26,7 +29,7 @@
     h2 {
       color: #ffffff;
       font-size: 1.5rem;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       font-weight: bold;
     }
 
@@ -42,6 +45,7 @@
       backdrop-filter: blur(5px);
       box-shadow: inset 0 0 3px rgba(255,255,255,0.4);
       margin-bottom: 12px;
+      box-sizing: border-box; /* Ensures padding doesn't break layout */
     }
 
     input::placeholder {
@@ -60,10 +64,17 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+      transition: background 0.3s ease;
     }
 
     button:hover {
       background: #0f0c31;
+    }
+    
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      opacity: 0.7;
     }
 
     .note {
@@ -71,13 +82,22 @@
       color: #ffffff;
       font-size: 0.85rem;
       opacity: 0.8;
+      line-height: 1.4;
     }
+
+    #messageBox {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      min-height: 20px;
+    }
+    
+    .error { color: #ffb3b3; }
+    .success { color: #b3ffb3; }
 
     @media (max-width: 480px) {
       .container {
         padding: 20px 15px;
       }
-
       h2 {
         font-size: 1.3rem;
       }
@@ -88,12 +108,12 @@
   <div class="container">
     <h2>Reset Password</h2>
 
-    <p style="color:#fff; margin-bottom:10px;">Open the app to reset faster or continue below:</p>
-    <button id="openAppBtn">Open App</button>
+    <input type="password" id="newPassword" placeholder="New Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+    
+    <button id="resetBtn">Update Password</button>
 
-    <input type="password" placeholder="New Password" required />
-    <input type="password" placeholder="Confirm Password" required />
-    <button id="resetBtn">Reset Password</button>
+    <div id="messageBox"></div>
 
     <div class="note">
       Password must include: uppercase, lowercase, number, symbol, and be at least 8 characters long.
@@ -101,49 +121,98 @@
   </div>
 
   <script>
-    // --- Open App deep link ---
-    const openAppBtn = document.getElementById("openAppBtn");
-    openAppBtn.addEventListener("click", () => {
-      const appScheme = "myapp://reset";
+    // ---------------------------------------------------------
+    // 1. CONFIGURE SUPABASE
+    // ---------------------------------------------------------
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // Attempt to open the app
-      window.location = appScheme;
+    // ---------------------------------------------------------
+    // 2. UI REFERENCES
+    // ---------------------------------------------------------
+    const newPassInput = document.getElementById('newPassword');
+    const confirmPassInput = document.getElementById('confirmPassword');
+    const resetBtn = document.getElementById('resetBtn');
+    const messageBox = document.getElementById('messageBox');
 
-      // Optional fallback message
-      setTimeout(() => {
-        console.log("If app is not installed, user stays on website.");
-      }, 2000);
+    // ---------------------------------------------------------
+    // 3. LOGIC
+    // ---------------------------------------------------------
+    
+    // Check if the user actually arrived via a valid magic link
+    // Supabase automatically parses the URL hash (#access_token=...) 
+    // and sets the session. We check that here.
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        showMessage("Recover mode active. Please enter new password.", "success");
+      } else if (!session) {
+        // If no session exists, the link might be expired or invalid
+        showMessage("Invalid or expired reset link.", "error");
+        resetBtn.disabled = true;
+      }
     });
 
-    // --- Password reset logic ---
-    const pwd = document.querySelector('input[placeholder="New Password"]');
-    const confirmPwd = document.querySelector('input[placeholder="Confirm Password"]');
-    const resetBtn = document.getElementById("resetBtn");
+    resetBtn.addEventListener('click', async function () {
+      // Clear previous messages
+      messageBox.textContent = '';
+      messageBox.className = '';
 
-    let errorBox = document.createElement('div');
-    errorBox.style.color = '#ffb3b3';
-    errorBox.style.marginTop = '10px';
-    errorBox.style.fontSize = '0.9rem';
-    document.querySelector('.container').appendChild(errorBox);
+      const newPassword = newPassInput.value;
+      const confirmPassword = confirmPassInput.value;
 
-    resetBtn.addEventListener('click', function () {
-      errorBox.textContent = '';
-
+      // --- Validation Logic (Matches your Regex) ---
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-      if (!pattern.test(pwd.value)) {
-        errorBox.textContent = 'Password does not meet requirements.';
+      if (!pattern.test(newPassword)) {
+        showMessage('Password does not meet requirements.', 'error');
         return;
       }
 
-      if (pwd.value !== confirmPwd.value) {
-        errorBox.textContent = 'Passwords do not match.';
+      if (newPassword !== confirmPassword) {
+        showMessage('Passwords do not match.', 'error');
         return;
       }
 
-      errorBox.textContent = '';
-      alert('Password reset successful!');
+      // --- Interaction with Supabase ---
+      setLoading(true);
+
+      // This is the JS equivalent of `client.Auth.Update(new UserAttributes { Password = ... })`
+      const { data, error } = await supabase.auth.updateUser({ 
+        password: newPassword 
+      });
+
+      setLoading(false);
+
+      if (error) {
+        console.error("Supabase Error:", error);
+        showMessage("Failed: " + error.message, 'error');
+      } else {
+        showMessage("Password updated successfully! You can now login in the app.", 'success');
+        // Clear inputs
+        newPassInput.value = "";
+        confirmPassInput.value = "";
+        resetBtn.disabled = true; // Prevent double submission
+      }
     });
+
+    // Helper to show messages
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = type;
+    }
+
+    // Helper to toggle button state
+    function setLoading(isLoading) {
+      if (isLoading) {
+        resetBtn.textContent = "Updating...";
+        resetBtn.disabled = true;
+      } else {
+        resetBtn.textContent = "Update Password";
+        resetBtn.disabled = false;
+      }
+    }
   </script>
 </body>
 </html>
