@@ -71,13 +71,13 @@
       background-size: cover;
     }
 
-    . logo-icon {
+    .logo-icon {
       font-size: 42px;
-      margin-bottom:  12px;
+      margin-bottom: 12px;
     }
 
     .brand-name {
-      margin:  0;
+      margin: 0;
       font-size: 22px;
       font-weight:  700;
       color: #ffffff;
@@ -108,11 +108,13 @@
     /* Input Fields */
     .input-group {
       margin-bottom: 16px;
+      position: relative;
     }
 
-    input[type="password"] {
+    input[type="password"],
+    input[type="text"] {
       width: 100%;
-      padding: 14px 16px;
+      padding: 14px 50px 14px 16px;
       border-radius: 10px;
       border: 2px solid #e2e8f0;
       font-size:  1rem;
@@ -122,10 +124,23 @@
       transition: all 0.3s ease;
     }
 
-    input[type="password"]:focus {
+    input[type="password"]:focus,
+    input[type="text"]:focus {
       border-color: #4a90a4;
       background: #ffffff;
       box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.15);
+    }
+
+    /* Error state for inputs */
+    input. input-error {
+      border-color: #e53e3e;
+      background:  #fff5f5;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    input.input-error:focus {
+      border-color: #e53e3e;
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
     }
 
     input:: placeholder {
@@ -138,8 +153,62 @@
       background: #edf2f7;
     }
 
+    /* Password Toggle Button */
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      color: #718096;
+      font-size:  18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+      width: auto;
+      box-shadow: none;
+    }
+
+    .toggle-password:hover {
+      color: #4a90a4;
+      transform: translateY(-50%);
+      box-shadow: none;
+    }
+
+    .toggle-password:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Show All Toggle */
+    .show-all-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      gap: 8px;
+    }
+
+    .show-all-container label {
+      font-size: 13px;
+      color: #4a5568;
+      cursor:  pointer;
+      user-select: none;
+    }
+
+    .show-all-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: #4a90a4;
+      cursor: pointer;
+    }
+
     /* Button */
-    button {
+    button. submit-btn {
       width: 100%;
       padding: 14px;
       margin-top: 8px;
@@ -148,7 +217,7 @@
       border: none;
       border-radius: 50px;
       font-size:  1rem;
-      font-weight: 600;
+      font-weight:  600;
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(44, 82, 130, 0.4);
       transition: all 0.3s ease;
@@ -158,16 +227,16 @@
       gap: 10px;
     }
 
-    button:hover: not(:disabled) {
+    button.submit-btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(44, 82, 130, 0.5);
     }
 
-    button:active: not(:disabled) {
+    button.submit-btn:active: not(:disabled) {
       transform: translateY(0);
     }
     
-    button:disabled {
+    button.submit-btn:disabled {
       background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
       cursor: not-allowed;
       transform: none;
@@ -201,19 +270,21 @@
       display: none;
       text-align: left;
       line-height: 1.5;
-      animation: fadeIn 0.4s ease-out;
     }
 
-    . error-msg {
+    /* Error Message - Red with animation */
+    .error-msg {
       background-color: #fff5f5;
-      border: 1px solid #fc8181;
+      border:  1px solid #fc8181;
       color: #c53030;
+      animation: errorPulse 0.6s ease-out, fadeInShake 0.5s ease-out;
     }
 
     .success-msg {
       background-color: #f0fff4;
       border: 1px solid #68d391;
       color: #276749;
+      animation: fadeIn 0.4s ease-out;
     }
 
     /* Spinner Animation */
@@ -237,11 +308,33 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Shake animation for errors */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform:  translateX(-6px); }
+      20%, 40%, 60%, 80% { transform: translateX(6px); }
+    }
+
+    @keyframes fadeInShake {
+      0% { opacity: 0; transform:  translateX(-10px); }
+      20% { transform: translateX(8px); }
+      40% { transform: translateX(-6px); }
+      60% { transform:  translateX(4px); }
+      80% { transform: translateX(-2px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes errorPulse {
+      0% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.5); }
+      50% { box-shadow: 0 0 0 8px rgba(229, 62, 62, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+    }
+
     /* Footer */
     .footer {
       background-color: #1a365d;
       padding: 16px 30px;
-      text-align: center;
+      text-align:  center;
     }
 
     .footer p {
@@ -267,13 +360,25 @@
 
         <div class="input-group">
           <input type="password" id="newPassword" placeholder="New Password" required />
+          <button type="button" class="toggle-password" id="toggleNew" aria-label="Toggle password visibility">
+            👁️
+          </button>
         </div>
         
         <div class="input-group">
           <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+          <button type="button" class="toggle-password" id="toggleConfirm" aria-label="Toggle password visibility">
+            👁️
+          </button>
+        </div>
+
+        <!-- Show All Passwords Toggle -->
+        <div class="show-all-container">
+          <input type="checkbox" id="showAllPasswords" class="show-all-checkbox" />
+          <label for="showAllPasswords">Show both passwords</label>
         </div>
         
-        <button id="resetBtn">
+        <button class="submit-btn" id="resetBtn">
           <span class="spinner" id="btnSpinner"></span>
           <span id="btnText">Update Password</span>
         </button>
@@ -311,29 +416,75 @@
     const btnText = document.getElementById('btnText');
     const btnSpinner = document.getElementById('btnSpinner');
     const messageBox = document.getElementById('messageBox');
+    const toggleNew = document. getElementById('toggleNew');
+    const toggleConfirm = document.getElementById('toggleConfirm');
+    const showAllPasswords = document. getElementById('showAllPasswords');
 
     // ---------------------------------------------------------
-    // 3. LOGIC
+    // 3. PASSWORD VISIBILITY TOGGLES
     // ---------------------------------------------------------
     
-    // Check session immediately
-    supabaseClient. auth.onAuthStateChange((event, session) => {
+    // Individual toggle for new password
+    toggleNew.addEventListener('click', function() {
+      togglePasswordVisibility(newPassInput, toggleNew);
+    });
+
+    // Individual toggle for confirm password
+    toggleConfirm.addEventListener('click', function() {
+      togglePasswordVisibility(confirmPassInput, toggleConfirm);
+    });
+
+    // Show all passwords checkbox
+    showAllPasswords.addEventListener('change', function() {
+      const type = this.checked ? 'text' : 'password';
+      const icon = this.checked ? '🙈' : '👁️';
+      
+      newPassInput.type = type;
+      confirmPassInput.type = type;
+      toggleNew.textContent = icon;
+      toggleConfirm.textContent = icon;
+    });
+
+    function togglePasswordVisibility(input, button) {
+      if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+      }
+      
+      // Update checkbox state to match
+      const bothVisible = newPassInput.type === 'text' && confirmPassInput.type === 'text';
+      showAllPasswords.checked = bothVisible;
+    }
+
+    // ---------------------------------------------------------
+    // 4. AUTH STATE
+    // ---------------------------------------------------------
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         console.log("Recovery mode active.");
-      } else if (!session) {
+      } else if (! session) {
         console.log("No session found (Link might be invalid or you are just testing UI).");
       }
     });
 
+    // ---------------------------------------------------------
+    // 5. FORM SUBMISSION
+    // ---------------------------------------------------------
     resetBtn.addEventListener('click', async function () {
-      // 1. Clear previous messages
+      // 1. Clear previous messages and error states
       hideMessage();
+      clearInputErrors();
 
       const newPassword = newPassInput.value;
-      const confirmPassword = confirmPassInput. value;
+      const confirmPassword = confirmPassInput.value;
 
       // 2. Validation Logic
       if (!newPassword || !confirmPassword) {
+        if (! newPassword) setInputError(newPassInput);
+        if (!confirmPassword) setInputError(confirmPassInput);
         showMessage('Please fill in both password fields.', 'error');
         return;
       }
@@ -341,11 +492,14 @@
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
       if (!pattern.test(newPassword)) {
+        setInputError(newPassInput);
         showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol.', 'error');
         return;
       }
 
       if (newPassword !== confirmPassword) {
+        setInputError(newPassInput);
+        setInputError(confirmPassInput);
         showMessage('Passwords do not match.', 'error');
         return;
       }
@@ -354,19 +508,21 @@
       setLoadingState(true);
 
       // 4. Supabase Update
-      const { data, error } = await supabaseClient.auth.updateUser({ 
+      const { data, error } = await supabaseClient. auth.updateUser({ 
         password: newPassword 
       });
 
       // 5. Handle Result
       if (error) {
-        setLoadingState(false); 
+        setLoadingState(false);
+        setInputError(newPassInput);
+        setInputError(confirmPassInput);
         console.error(error);
-        showMessage("Error: " + error.message, 'error');
+        showMessage("Error: " + error. message, 'error');
       } else {
         setLoadingState(true); 
         btnText.textContent = "Updated ✓";
-        btnSpinner.style.display = "none";
+        btnSpinner.style. display = "none";
         showMessage("Password successfully updated!  You can now log in with your new password.", 'success');
         
         newPassInput.value = "";
@@ -374,32 +530,72 @@
       }
     });
 
-    // Helper: Show Message Box
+    // ---------------------------------------------------------
+    // 6. HELPER FUNCTIONS
+    // ---------------------------------------------------------
+
+    // Show Message Box
     function showMessage(text, type) {
       messageBox.style.display = 'block';
       messageBox.textContent = text;
       
       messageBox.classList.remove('error-msg', 'success-msg');
-      messageBox.classList.add(type === 'error' ? 'error-msg' : 'success-msg');
+      messageBox.classList.add(type === 'error' ?  'error-msg' : 'success-msg');
+      
+      // Re-trigger animation
+      messageBox.style.animation = 'none';
+      messageBox.offsetHeight; // Trigger reflow
+      messageBox.style.animation = '';
     }
 
-    // Helper:  Hide Message Box
+    // Hide Message Box
     function hideMessage() {
-      messageBox.style.display = 'none';
+      messageBox.style. display = 'none';
     }
 
-    // Helper: Toggle Loading State
+    // Set input error state with animation
+    function setInputError(input) {
+      input.classList.add('input-error');
+      
+      // Re-trigger shake animation
+      input.style.animation = 'none';
+      input.offsetHeight; // Trigger reflow
+      input.style.animation = 'shake 0.5s ease-in-out';
+    }
+
+    // Clear all input error states
+    function clearInputErrors() {
+      newPassInput.classList.remove('input-error');
+      confirmPassInput.classList.remove('input-error');
+    }
+
+    // Remove error state on input focus
+    newPassInput.addEventListener('focus', function() {
+      this.classList.remove('input-error');
+    });
+
+    confirmPassInput.addEventListener('focus', function() {
+      this.classList. remove('input-error');
+    });
+
+    // Toggle Loading State
     function setLoadingState(isLoading) {
       if (isLoading) {
         newPassInput.disabled = true;
-        confirmPassInput. disabled = true;
-        resetBtn.disabled = true;
+        confirmPassInput.disabled = true;
+        resetBtn. disabled = true;
+        toggleNew.disabled = true;
+        toggleConfirm.disabled = true;
+        showAllPasswords.disabled = true;
         btnText.textContent = "Updating...";
-        btnSpinner. style.display = "block";
+        btnSpinner.style.display = "block";
       } else {
         newPassInput.disabled = false;
         confirmPassInput.disabled = false;
         resetBtn.disabled = false;
+        toggleNew.disabled = false;
+        toggleConfirm.disabled = false;
+        showAllPasswords.disabled = false;
         btnText.textContent = "Update Password";
         btnSpinner.style.display = "none";
       }
