@@ -45,7 +45,7 @@
       z-index: 1;
     }
 
-    .card {
+    . card {
       background-color: #ffffff;
       border-radius: 16px;
       overflow: hidden;
@@ -76,7 +76,7 @@
       margin-bottom: 12px;
     }
 
-    .brand-name {
+    . brand-name {
       margin: 0;
       font-size: 22px;
       font-weight:  700;
@@ -91,7 +91,7 @@
 
     . form-title {
       margin:  0 0 8px;
-      font-size:  20px;
+      font-size: 20px;
       color: #1a365d;
       text-align: center;
       font-weight: 600;
@@ -100,14 +100,14 @@
     .form-subtitle {
       margin: 0 0 24px;
       font-size:  14px;
-      color:  #4a5568;
+      color: #4a5568;
       text-align:  center;
       line-height: 1.5;
     }
 
     /* Input Fields */
     .input-group {
-      margin-bottom: 16px;
+      margin-bottom:  16px;
       position: relative;
     }
 
@@ -134,7 +134,7 @@
     /* Error state for inputs */
     input. input-error {
       border-color: #e53e3e;
-      background:  #fff5f5;
+      background: #fff5f5;
       animation: shake 0.5s ease-in-out;
     }
 
@@ -171,12 +171,14 @@
       transition: color 0.2s ease;
       width: auto;
       box-shadow: none;
+      border-radius: 4px;
     }
 
-    .toggle-password:hover {
+    . toggle-password:hover: not(:disabled) {
       color: #4a90a4;
       transform: translateY(-50%);
       box-shadow: none;
+      background: rgba(74, 144, 164, 0.1);
     }
 
     .toggle-password:disabled {
@@ -207,17 +209,17 @@
       cursor: pointer;
     }
 
-    /* Button */
-    button. submit-btn {
+    /* Submit Button - Main CTA */
+    .submit-btn {
       width: 100%;
-      padding: 14px;
+      padding: 16px 40px;
       margin-top: 8px;
       background: linear-gradient(135deg, #4a90a4 0%, #2c5282 100%);
-      color: white;
-      border: none;
-      border-radius: 50px;
+      color: #ffffff;
+      border:  none;
+      border-radius:  50px;
       font-size:  1rem;
-      font-weight:  600;
+      font-weight: 600;
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(44, 82, 130, 0.4);
       transition: all 0.3s ease;
@@ -225,22 +227,30 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
+      text-transform: none;
+      letter-spacing: 0.5px;
     }
 
-    button.submit-btn:hover:not(:disabled) {
+    .submit-btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(44, 82, 130, 0.5);
+      background: linear-gradient(135deg, #5ba0b4 0%, #3c6292 100%);
     }
 
-    button.submit-btn:active: not(:disabled) {
+    .submit-btn:active: not(:disabled) {
       transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(44, 82, 130, 0.4);
     }
     
-    button.submit-btn:disabled {
+    .submit-btn:disabled {
       background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+
+    . submit-btn . btn-text {
+      color: #ffffff;
     }
 
     /* Requirements Note */
@@ -273,7 +283,7 @@
     }
 
     /* Error Message - Red with animation */
-    .error-msg {
+    . error-msg {
       background-color: #fff5f5;
       border:  1px solid #fc8181;
       color: #c53030;
@@ -288,7 +298,7 @@
     }
 
     /* Spinner Animation */
-    . spinner {
+    .spinner {
       border: 3px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       border-top: 3px solid #ffffff;
@@ -304,14 +314,14 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
+      from { opacity:  0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     /* Shake animation for errors */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform:  translateX(-6px); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
       20%, 40%, 60%, 80% { transform: translateX(6px); }
     }
 
@@ -319,7 +329,7 @@
       0% { opacity: 0; transform:  translateX(-10px); }
       20% { transform: translateX(8px); }
       40% { transform: translateX(-6px); }
-      60% { transform:  translateX(4px); }
+      60% { transform: translateX(4px); }
       80% { transform: translateX(-2px); }
       100% { opacity: 1; transform: translateX(0); }
     }
@@ -334,7 +344,7 @@
     .footer {
       background-color: #1a365d;
       padding: 16px 30px;
-      text-align:  center;
+      text-align: center;
     }
 
     .footer p {
@@ -378,9 +388,9 @@
           <label for="showAllPasswords">Show both passwords</label>
         </div>
         
-        <button class="submit-btn" id="resetBtn">
+        <button type="button" class="submit-btn" id="resetBtn">
           <span class="spinner" id="btnSpinner"></span>
-          <span id="btnText">Update Password</span>
+          <span class="btn-text" id="btnText">Update Password</span>
         </button>
 
         <div id="messageBox"></div>
@@ -482,10 +492,10 @@
       const confirmPassword = confirmPassInput.value;
 
       // 2. Validation Logic
-      if (!newPassword || !confirmPassword) {
-        if (! newPassword) setInputError(newPassInput);
+      if (!newPassword || ! confirmPassword) {
+        if (!newPassword) setInputError(newPassInput);
         if (!confirmPassword) setInputError(confirmPassInput);
-        showMessage('Please fill in both password fields.', 'error');
+        showMessage('Please fill in both password fields. ', 'error');
         return;
       }
 
@@ -504,11 +514,11 @@
         return;
       }
 
-      // 3. UI Update: Set to "Loading" state
+      // 3. UI Update:  Set to "Loading" state
       setLoadingState(true);
 
       // 4. Supabase Update
-      const { data, error } = await supabaseClient. auth.updateUser({ 
+      const { data, error } = await supabaseClient.auth.updateUser({ 
         password: newPassword 
       });
 
@@ -518,12 +528,12 @@
         setInputError(newPassInput);
         setInputError(confirmPassInput);
         console.error(error);
-        showMessage("Error: " + error. message, 'error');
+        showMessage("Error:  " + error.message, 'error');
       } else {
         setLoadingState(true); 
         btnText.textContent = "Updated ✓";
-        btnSpinner.style. display = "none";
-        showMessage("Password successfully updated!  You can now log in with your new password.", 'success');
+        btnSpinner.style.display = "none";
+        showMessage("Password successfully updated! You can now log in with your new password.", 'success');
         
         newPassInput.value = "";
         confirmPassInput.value = "";
@@ -571,11 +581,11 @@
 
     // Remove error state on input focus
     newPassInput.addEventListener('focus', function() {
-      this.classList.remove('input-error');
+      this.classList. remove('input-error');
     });
 
     confirmPassInput.addEventListener('focus', function() {
-      this.classList. remove('input-error');
+      this.classList.remove('input-error');
     });
 
     // Toggle Loading State
@@ -583,9 +593,9 @@
       if (isLoading) {
         newPassInput.disabled = true;
         confirmPassInput.disabled = true;
-        resetBtn. disabled = true;
+        resetBtn.disabled = true;
         toggleNew.disabled = true;
-        toggleConfirm.disabled = true;
+        toggleConfirm. disabled = true;
         showAllPasswords.disabled = true;
         btnText.textContent = "Updating...";
         btnSpinner.style.display = "block";
@@ -593,7 +603,7 @@
         newPassInput.disabled = false;
         confirmPassInput.disabled = false;
         resetBtn.disabled = false;
-        toggleNew.disabled = false;
+        toggleNew. disabled = false;
         toggleConfirm.disabled = false;
         showAllPasswords.disabled = false;
         btnText.textContent = "Update Password";
