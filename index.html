@@ -1,4 +1,4 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,404 +10,529 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    : root {
+      --deep-navy: #1e3a5f;
+      --navy: #2a4a6e;
+      --teal: #4a8fa8;
+      --aqua: #6bb8cc;
+      --light-sky: #a8d4e6;
+      --pale-sky: #d4eaf5;
+      --white: #ffffff;
+      --error-red: #e53e3e;
+      --error-bg: #fee2e2;
+      --success-green: #38a169;
+      --success-bg: #d4edda;
     }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #4a90a4 100%);
+      background:  linear-gradient(160deg, var(--deep-navy) 0%, var(--navy) 40%, var(--teal) 100%);
       position: relative;
       overflow: hidden;
     }
 
-    /* Wave background decoration */
-    body::before {
-      content: '';
+    /* Animated wave background */
+    .wave-container {
       position: absolute;
       bottom: 0;
-      left:  0;
-      right: 0;
+      left: 0;
+      width: 100%;
       height: 200px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231a365d' fill-opacity='0.3' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250. 7C672,235,768,181,864,181. 3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat bottom;
-      background-size: cover;
+      overflow: hidden;
+    }
+
+    .wave {
+      position:  absolute;
+      bottom: 0;
+      left: 0;
+      width:  200%;
+      height:  100%;
+      background:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%234a8fa8' fill-opacity='0.4' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,149. 3C672,149,768,203,864,208C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+      background-size: 50% 100%;
+      animation: waveMove 15s linear infinite;
+    }
+
+    . wave: nth-child(2) {
+      bottom: 10px;
+      opacity: 0.6;
+      animation:  waveMove 12s linear infinite reverse;
+    }
+
+    .wave:nth-child(3) {
+      bottom:  20px;
+      opacity: 0.3;
+      animation:  waveMove 18s linear infinite;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Floating bubbles */
+    . bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position:  absolute;
+      bottom: -50px;
+      background: rgba(168, 212, 230, 0.15);
+      border-radius: 50%;
+      animation: bubbleRise 8s ease-in infinite;
+    }
+
+    .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-delay: 0s; animation-duration: 10s; }
+    .bubble:nth-child(2) { left: 25%; width: 25px; height: 25px; animation-delay: 2s; animation-duration:  12s; }
+    .bubble:nth-child(3) { left: 50%; width: 50px; height: 50px; animation-delay: 4s; animation-duration:  9s; }
+    .bubble:nth-child(4) { left: 70%; width: 30px; height: 30px; animation-delay: 1s; animation-duration: 11s; }
+    .bubble:nth-child(5) { left: 85%; width: 35px; height: 35px; animation-delay: 3s; animation-duration:  13s; }
+
+    @keyframes bubbleRise {
+      0% { transform: translateY(0) scale(1); opacity: 0. 6; }
+      50% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
     }
 
     . container {
       width: 100%;
-      max-width: 420px;
+      max-width:  440px;
       padding: 20px;
-      z-index: 1;
+      z-index: 10;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .card {
-      background-color: #ffffff;
-      border-radius: 16px;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform:  translateY(0);
+      }
+    }
+
+    . card {
+      background:  var(--white);
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(26, 54, 93, 0.3);
+      box-shadow: 0 20px 60px rgba(30, 58, 95, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 80px rgba(30, 58, 95, 0.5);
     }
 
     /* Header */
     .header {
-      background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
-      padding: 30px 30px 40px;
+      background:  linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--teal) 100%);
+      padding: 35px 30px 50px;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
-    .header:: after {
-      content:  '';
-      position:  absolute;
+    . header:: before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height:  200%;
+      background: radial-gradient(circle, rgba(168, 212, 230, 0.1) 0%, transparent 60%);
+      animation: shimmer 8s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20%, 20%); }
+    }
+
+    . header:: after {
+      content: '';
+      position: absolute;
       bottom: -1px;
       left: 0;
       right: 0;
-      height:  30px;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' d='M0,0 C480,60 960,60 1440,0 L1440,60 L0,60 Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+      height: 40px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' d='M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
       background-size: cover;
     }
 
+    .logo-container {
+      position: relative;
+      display:  inline-block;
+      margin-bottom: 15px;
+    }
+
     .logo-icon {
-      font-size: 42px;
-      margin-bottom: 12px;
+      font-size: 48px;
+      animation: floatLogo 3s ease-in-out infinite;
+      display: block;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .moon-icon {
+      position: absolute;
+      top: -5px;
+      right: -15px;
+      font-size: 18px;
+      animation: moonGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes moonGlow {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
     }
 
     .brand-name {
-      margin: 0;
-      font-size:  22px;
+      font-size: 26px;
       font-weight: 700;
-      color:  #ffffff;
-      letter-spacing: 2px;
+      color: var(--white);
+      letter-spacing: 4px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
     /* Form Body */
     .form-body {
-      padding: 30px 30px 35px;
+      padding: 35px 35px 40px;
     }
 
     .form-title {
-      margin:  0 0 8px;
-      font-size: 20px;
-      color: #1a365d;
+      font-size: 22px;
+      color: var(--deep-navy);
       text-align: center;
-      font-weight: 600;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .form-subtitle {
-      margin:  0 0 24px;
       font-size: 14px;
-      color: #4a5568;
+      color: var(--navy);
       text-align: center;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin-bottom: 28px;
+      opacity: 0.8;
     }
 
     /* Input Fields */
     .input-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       position: relative;
+    }
+
+    .input-wrapper {
+      position:  relative;
+      display: flex;
+      align-items: center;
     }
 
     input[type="password"],
     input[type="text"] {
-      width: 100%;
-      padding:  14px 50px 14px 16px;
-      border-radius: 10px;
-      border: 2px solid #e2e8f0;
+      width:  100%;
+      padding: 16px 50px 16px 20px;
+      border-radius: 14px;
+      border: 2px solid var(--pale-sky);
       font-size: 1rem;
-      background:  #f7fafc;
-      color: #1a365d;
+      background: var(--pale-sky);
+      color: var(--deep-navy);
       outline: none;
       transition: all 0.3s ease;
     }
 
-    input[type="password"]: focus,
-    input[type="text"]:focus {
-      border-color: #4a90a4;
-      background: #ffffff;
-      box-shadow:  0 0 0 3px rgba(74, 144, 164, 0.15);
-    }
-
-    /* Error state for inputs */
-    input.input-error {
-      border-color: #e53e3e;
-      background: #fff5f5;
-      animation: shake 0.5s ease-in-out;
-    }
-
-    input.input-error:focus {
-      border-color: #e53e3e;
-      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
-    }
-
     input:: placeholder {
-      color: #a0aec0;
+      color: var(--teal);
+      opacity: 0.7;
+    }
+
+    input:focus {
+      border-color: var(--aqua);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(107, 184, 204, 0.2);
     }
 
     input: disabled {
-      opacity:  0.6;
-      cursor: not-allowed;
-      background: #edf2f7;
+      opacity:  0.5;
+      cursor:  not-allowed;
+      background: var(--pale-sky);
     }
 
-    /* Password Toggle Button - Redesigned */
+    /* Password Toggle */
     .toggle-password {
       position: absolute;
-      right: 12px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
-      background: linear-gradient(135deg, #e8f4f8 0%, #d4e8ed 100%);
-      border: 1px solid #b8d4de;
-      border-radius: 8px;
+      background: none;
+      border:  none;
       cursor: pointer;
-      padding: 8px;
-      color: #2c5282;
+      padding: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
-      width: 36px;
-      height: 36px;
-      box-shadow: 0 2px 4px rgba(26, 54, 93, 0.1);
+      color: var(--teal);
+      transition: color 0.3s ease, transform 0.2s ease;
+      width: auto;
+      box-shadow: none;
     }
 
-    .toggle-password:hover: not(:disabled) {
-      background: linear-gradient(135deg, #4a90a4 0%, #2c5282 100%);
-      border-color: #2c5282;
-      color: #ffffff;
-      transform: translateY(-50%) scale(1.05);
-      box-shadow: 0 4px 8px rgba(44, 82, 130, 0.3);
+    .toggle-password:hover {
+      color: var(--deep-navy);
+      transform: translateY(-50%) scale(1.1);
     }
 
-    .toggle-password:active: not(:disabled) {
-      transform: translateY(-50%) scale(0.98);
-    }
-
-    .toggle-password:disabled {
+    .toggle-password: disabled {
       opacity: 0.4;
-      cursor:  not-allowed;
-      background: #edf2f7;
-      border-color: #cbd5e0;
+      cursor: not-allowed;
     }
 
     . toggle-password svg {
-      width:  18px;
-      height: 18px;
-      fill: currentColor;
-      transition: all 0.2s ease;
-    }
-
-    .toggle-password. visible {
-      background: linear-gradient(135deg, #4a90a4 0%, #2c5282 100%);
-      border-color: #2c5282;
-      color: #ffffff;
-    }
-
-    /* Show All Toggle */
-    .show-all-container {
-      display:  flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 16px;
-      gap: 8px;
-    }
-
-    .show-all-container label {
-      font-size: 13px;
-      color: #4a5568;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .show-all-checkbox {
-      width:  18px;
-      height: 18px;
-      accent-color: #4a90a4;
-      cursor: pointer;
+      width:  22px;
+      height: 22px;
     }
 
     /* Button */
-    button. submit-btn {
-      width:  100%;
-      padding: 14px;
-      margin-top: 8px;
-      background: linear-gradient(135deg, #4a90a4 0%, #2c5282 100%);
-      color: white;
+    .submit-btn {
+      width: 100%;
+      padding: 16px 24px;
+      margin-top: 10px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--deep-navy) 100%);
+      color: var(--white);
       border: none;
-      border-radius:  50px;
-      font-size: 1rem;
+      border-radius: 50px;
+      font-size: 1.05rem;
       font-weight: 600;
       cursor:  pointer;
-      box-shadow: 0 4px 14px rgba(44, 82, 130, 0.4);
+      box-shadow: 0 8px 25px rgba(30, 58, 95, 0.35);
       transition: all 0.3s ease;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
     }
 
-    button.submit-btn:hover: not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(44, 82, 130, 0.5);
+    . submit-btn:: before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background:  linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
-    button.submit-btn:active: not(:disabled) {
-      transform: translateY(0);
+    .submit-btn:hover: not(: disabled)::before {
+      left: 100%;
     }
-    
-    button.submit-btn:disabled {
-      background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(30, 58, 95, 0.45);
+    }
+
+    .submit-btn:active: not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      background: linear-gradient(135deg, var(--light-sky) 0%, var(--teal) 100%);
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
 
-    /* Requirements Note */
-    .note {
-      margin-top: 20px;
-      padding:  12px 16px;
-      background-color: #e8f4f8;
-      border-left: 4px solid #4a90a4;
-      border-radius: 4px;
-      color: #2c5282;
-      font-size: 0.8rem;
-      line-height: 1.5;
-    }
-
-    . note strong {
-      display: block;
-      margin-bottom: 4px;
-      color: #1a365d;
-    }
-
-    /* Message Box Styling */
-    #messageBox {
-      margin-top: 20px;
-      padding: 14px 16px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      display: none;
-      text-align: left;
-      line-height: 1.5;
-    }
-
-    /* Error Message - Red with animation */
-    .error-msg {
-      background-color: #fff5f5;
-      border: 1px solid #fc8181;
-      color: #c53030;
-      animation: errorPulse 0.6s ease-out, fadeInShake 0.5s ease-out;
-    }
-
-    .success-msg {
-      background-color: #f0fff4;
-      border:  1px solid #68d391;
-      color: #276749;
-      animation:  fadeIn 0.4s ease-out;
-    }
-
-    /* Spinner Animation */
-    . spinner {
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
       border: 3px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      border-top: 3px solid #ffffff;
-      width:  20px;
-      height: 20px;
-      animation: spin 1s linear infinite;
+      border-top-color: var(--white);
+      animation: spin 0.8s linear infinite;
       display: none;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Requirements Note */
+    .note {
+      margin-top: 24px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, var(--pale-sky) 0%, rgba(168, 212, 230, 0.4) 100%);
+      border-left: 4px solid var(--teal);
+      border-radius: 0 12px 12px 0;
+      color: var(--navy);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease-out 0.3s backwards;
+    }
+
+    . note strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--deep-navy);
+      font-weight: 600;
+    }
+
+    /* Message Box */
+    #messageBox {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      display: none;
+      text-align: left;
+      line-height: 1.5;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform:  translateY(0);
+      }
+    }
+
+    .error-msg {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-red);
+      color: var(--error-red);
+    }
+
+    .success-msg {
+      background-color: var(--success-bg);
+      border: 1px solid var(--success-green);
+      color: var(--success-green);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Shake animation for errors */
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
-      20%, 40%, 60%, 80% { transform: translateX(6px); }
-    }
-
-    @keyframes fadeInShake {
-      0% { opacity: 0; transform: translateX(-10px); }
-      20% { transform: translateX(8px); }
-      40% { transform:  translateX(-6px); }
-      60% { transform:  translateX(4px); }
-      80% { transform:  translateX(-2px); }
-      100% { opacity:  1; transform:  translateX(0); }
-    }
-
-    @keyframes errorPulse {
-      0% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.5); }
-      50% { box-shadow: 0 0 0 8px rgba(229, 62, 62, 0); }
-      100% { box-shadow:  0 0 0 0 rgba(229, 62, 62, 0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* Footer */
-    . footer {
-      background-color: #1a365d;
-      padding: 16px 30px;
+    .footer {
+      background:  linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 100%);
+      padding: 18px 30px;
       text-align: center;
     }
 
     .footer p {
-      margin:  0;
       font-size: 12px;
-      color: #a0c4d4;
+      color: var(--light-sky);
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding:  15px;
+      }
+
+      .form-body {
+        padding: 25px 25px 30px;
+      }
+
+      .brand-name {
+        font-size: 22px;
+        letter-spacing: 3px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Animated Background Elements -->
+  <div class="wave-container">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+  
+  <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
   <div class="container">
     <div class="card">
       <!-- Header -->
       <div class="header">
-        <div class="logo-icon">🦈</div>
+        <div class="logo-container">
+          <span class="logo-icon">🦈</span>
+          <span class="moon-icon">🌙</span>
+        </div>
         <h1 class="brand-name">SHARKBYTE</h1>
       </div>
 
       <!-- Form Body -->
       <div class="form-body">
-        <h2 class="form-title">Reset Your Password 🔑</h2>
+        <h2 class="form-title">Reset Your Password</h2>
         <p class="form-subtitle">Enter your new password below to regain access to your account.</p>
 
         <div class="input-group">
-          <input type="password" id="newPassword" placeholder="New Password" required />
-          <button type="button" class="toggle-password" id="toggleNew" aria-label="Toggle password visibility">
-            <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 4. 5C7 4.5 2. 73 7.61 1 12c1.73 4.39 6 7. 5 11 7.5s9. 27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-            </svg>
-            <svg class="eye-off-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-              <path d="M12 7c2.76 0 5 2.24 5 5 0 . 65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74. 25-3.98. 7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4. 27l2.28 2.28.46. 46C3.08 8.3 1. 78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l. 42.42L19. 73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-. 05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 . 22 0 .44-.03.65-.08l1.55 1.55c-. 67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79. 2-1.53.53-2.2zm4.31-. 78l3.15 3.15.02-. 16c0-1.66-1.34-3-3-3l-. 17. 01z"/>
-            </svg>
-          </button>
+          <div class="input-wrapper">
+            <input type="password" id="newPassword" placeholder="New Password" required />
+            <button type="button" class="toggle-password" data-target="newPassword" aria-label="Toggle password visibility">
+              <!-- Eye closed (hidden) icon -->
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17. 94 17.94A10. 07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9. 9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6. 72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+              <!-- Eye open (visible) icon -->
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
         </div>
         
         <div class="input-group">
-          <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-          <button type="button" class="toggle-password" id="toggleConfirm" aria-label="Toggle password visibility">
-            <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-            </svg>
-            <svg class="eye-off-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-              <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Show All Passwords Toggle -->
-        <div class="show-all-container">
-          <input type="checkbox" id="showAllPasswords" class="show-all-checkbox" />
-          <label for="showAllPasswords">Show both passwords</label>
+          <div class="input-wrapper">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+            <button type="button" class="toggle-password" data-target="confirmPassword" aria-label="Toggle password visibility">
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
         </div>
         
         <button class="submit-btn" id="resetBtn">
@@ -418,14 +543,14 @@
         <div id="messageBox"></div>
 
         <div class="note">
-          <strong>Password Requirements:</strong>
+          <strong>🔒 Password Requirements:</strong>
           At least 8 characters with uppercase, lowercase, number, and symbol (@$!%*?&)
         </div>
       </div>
 
       <!-- Footer -->
       <div class="footer">
-        <p>© 2026 SharkByte. All rights reserved. </p>
+        <p>© 2026 SharkByte. All rights reserved.</p>
       </div>
     </div>
   </div>
@@ -448,61 +573,35 @@
     const btnText = document.getElementById('btnText');
     const btnSpinner = document. getElementById('btnSpinner');
     const messageBox = document.getElementById('messageBox');
-    const toggleNew = document.getElementById('toggleNew');
-    const toggleConfirm = document.getElementById('toggleConfirm');
-    const showAllPasswords = document. getElementById('showAllPasswords');
+    const toggleButtons = document.querySelectorAll('.toggle-password');
 
     // ---------------------------------------------------------
-    // 3. PASSWORD VISIBILITY TOGGLES
+    // 3. PASSWORD VISIBILITY TOGGLE
+    // ---------------------------------------------------------
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        const eyeClosed = this.querySelector('.eye-closed');
+        const eyeOpen = this.querySelector('.eye-open');
+        
+        if (input. type === 'password') {
+          input.type = 'text';
+          eyeClosed.style. display = 'none';
+          eyeOpen.style.display = 'block';
+        } else {
+          input.type = 'password';
+          eyeClosed.style.display = 'block';
+          eyeOpen.style. display = 'none';
+        }
+      });
+    });
+
+    // ---------------------------------------------------------
+    // 4. AUTH SESSION LOGIC
     // ---------------------------------------------------------
     
-    // Individual toggle for new password
-    toggleNew.addEventListener('click', function() {
-      togglePasswordVisibility(newPassInput, toggleNew);
-    });
-
-    // Individual toggle for confirm password
-    toggleConfirm. addEventListener('click', function() {
-      togglePasswordVisibility(confirmPassInput, toggleConfirm);
-    });
-
-    // Show all passwords checkbox
-    showAllPasswords.addEventListener('change', function() {
-      const isVisible = this.checked;
-      
-      setPasswordVisibility(newPassInput, toggleNew, isVisible);
-      setPasswordVisibility(confirmPassInput, toggleConfirm, isVisible);
-    });
-
-    function togglePasswordVisibility(input, button) {
-      const isCurrentlyPassword = input.type === 'password';
-      setPasswordVisibility(input, button, isCurrentlyPassword);
-      
-      // Update checkbox state to match
-      const bothVisible = newPassInput.type === 'text' && confirmPassInput.type === 'text';
-      showAllPasswords.checked = bothVisible;
-    }
-
-    function setPasswordVisibility(input, button, showPassword) {
-      const eyeIcon = button.querySelector('.eye-icon');
-      const eyeOffIcon = button.querySelector('.eye-off-icon');
-      
-      if (showPassword) {
-        input.type = 'text';
-        eyeIcon.style.display = 'none';
-        eyeOffIcon.style.display = 'block';
-        button.classList.add('visible');
-      } else {
-        input.type = 'password';
-        eyeIcon.style.display = 'block';
-        eyeOffIcon.style.display = 'none';
-        button.classList. remove('visible');
-      }
-    }
-
-    // ---------------------------------------------------------
-    // 4. AUTH STATE
-    // ---------------------------------------------------------
+    // Check session immediately
     supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         console.log("Recovery mode active.");
@@ -515,33 +614,30 @@
     // 5. FORM SUBMISSION
     // ---------------------------------------------------------
     resetBtn.addEventListener('click', async function () {
-      // 1. Clear previous messages and error states
+      // 1. Clear previous messages
       hideMessage();
-      clearInputErrors();
 
       const newPassword = newPassInput. value;
       const confirmPassword = confirmPassInput.value;
 
       // 2. Validation Logic
-      if (!newPassword || !confirmPassword) {
-        if (!newPassword) setInputError(newPassInput);
-        if (!confirmPassword) setInputError(confirmPassInput);
+      if (! newPassword || ! confirmPassword) {
         showMessage('Please fill in both password fields. ', 'error');
+        shakeButton();
         return;
       }
 
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$! %*?&]{8,}$/;
 
       if (!pattern. test(newPassword)) {
-        setInputError(newPassInput);
-        showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol. ', 'error');
+        showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol.', 'error');
+        shakeButton();
         return;
       }
 
       if (newPassword !== confirmPassword) {
-        setInputError(newPassInput);
-        setInputError(confirmPassInput);
-        showMessage('Passwords do not match.', 'error');
+        showMessage('Passwords do not match. ', 'error');
+        shakeButton();
         return;
       }
 
@@ -555,19 +651,21 @@
 
       // 5. Handle Result
       if (error) {
-        setLoadingState(false);
-        setInputError(newPassInput);
-        setInputError(confirmPassInput);
+        setLoadingState(false); 
         console.error(error);
         showMessage("Error:  " + error.message, 'error');
+        shakeButton();
       } else {
         setLoadingState(true); 
         btnText.textContent = "Updated ✓";
-        btnSpinner.style.display = "none";
+        btnSpinner.style. display = "none";
         showMessage("Password successfully updated!  You can now log in with your new password.", 'success');
         
         newPassInput.value = "";
         confirmPassInput.value = "";
+        
+        // Add success animation to button
+        resetBtn.style.background = 'linear-gradient(135deg, #38a169 0%, #2f855a 100%)';
       }
     });
 
@@ -575,72 +673,57 @@
     // 6. HELPER FUNCTIONS
     // ---------------------------------------------------------
 
-    // Show Message Box
+    // Helper: Show Message Box
     function showMessage(text, type) {
       messageBox.style.display = 'block';
       messageBox.textContent = text;
       
       messageBox.classList.remove('error-msg', 'success-msg');
       messageBox.classList.add(type === 'error' ?  'error-msg' : 'success-msg');
-      
-      // Re-trigger animation
-      messageBox.style.animation = 'none';
-      messageBox.offsetHeight; // Trigger reflow
-      messageBox.style.animation = '';
     }
 
-    // Hide Message Box
+    // Helper: Hide Message Box
     function hideMessage() {
       messageBox.style.display = 'none';
     }
 
-    // Set input error state with animation
-    function setInputError(input) {
-      input.classList.add('input-error');
-      
-      // Re-trigger shake animation
-      input. style.animation = 'none';
-      input. offsetHeight; // Trigger reflow
-      input.style.animation = 'shake 0.5s ease-in-out';
-    }
-
-    // Clear all input error states
-    function clearInputErrors() {
-      newPassInput.classList. remove('input-error');
-      confirmPassInput.classList.remove('input-error');
-    }
-
-    // Remove error state on input focus
-    newPassInput.addEventListener('focus', function() {
-      this.classList.remove('input-error');
-    });
-
-    confirmPassInput.addEventListener('focus', function() {
-      this.classList.remove('input-error');
-    });
-
-    // Toggle Loading State
+    // Helper: Toggle Loading State
     function setLoadingState(isLoading) {
       if (isLoading) {
         newPassInput.disabled = true;
         confirmPassInput.disabled = true;
         resetBtn.disabled = true;
-        toggleNew.disabled = true;
-        toggleConfirm.disabled = true;
-        showAllPasswords.disabled = true;
+        toggleButtons.forEach(btn => btn.disabled = true);
         btnText.textContent = "Updating...";
         btnSpinner.style.display = "block";
       } else {
         newPassInput.disabled = false;
         confirmPassInput.disabled = false;
         resetBtn.disabled = false;
-        toggleNew. disabled = false;
-        toggleConfirm.disabled = false;
-        showAllPasswords.disabled = false;
-        btnText.textContent = "Update Password";
-        btnSpinner.style.display = "none";
+        toggleButtons. forEach(btn => btn.disabled = false);
+        btnText. textContent = "Update Password";
+        btnSpinner.style. display = "none";
       }
     }
+
+    // Helper: Shake animation for errors
+    function shakeButton() {
+      resetBtn.style.animation = 'shake 0.5s ease';
+      setTimeout(() => {
+        resetBtn.style.animation = '';
+      }, 500);
+    }
+
+    // Add shake keyframes dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
