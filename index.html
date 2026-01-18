@@ -1,4 +1,4 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -51,11 +51,11 @@
 
     .wave {
       position: absolute;
-      bottom: 0;
+      bottom:  0;
       left: 0;
-      width:  200%;
+      width: 200%;
       height: 100%;
-      background:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%234a8fa8' fill-opacity='0.4' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,149. 3C672,149,768,203,864,208C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%234a8fa8' fill-opacity='0.4' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,149. 3C672,149,768,203,864,208C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
       background-size: 50% 100%;
       animation: waveMove 15s linear infinite;
     }
@@ -67,9 +67,9 @@
     }
 
     .wave:nth-child(3) {
-      bottom:  20px;
+      bottom: 20px;
       opacity: 0.3;
-      animation:  waveMove 18s linear infinite;
+      animation: waveMove 18s linear infinite;
     }
 
     @keyframes waveMove {
@@ -78,16 +78,16 @@
     }
 
     /* Floating bubbles */
-    . bubbles {
+    .bubbles {
       position: absolute;
       width: 100%;
-      height: 100%;
+      height:  100%;
       pointer-events: none;
       overflow: hidden;
     }
 
     .bubble {
-      position:  absolute;
+      position: absolute;
       bottom: -50px;
       background: rgba(168, 212, 230, 0.15);
       border-radius: 50%;
@@ -95,20 +95,20 @@
     }
 
     .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-delay: 0s; animation-duration: 10s; }
-    .bubble:nth-child(2) { left: 25%; width: 25px; height: 25px; animation-delay: 2s; animation-duration:  12s; }
-    .bubble:nth-child(3) { left: 50%; width: 50px; height: 50px; animation-delay: 4s; animation-duration:  9s; }
+    .bubble:nth-child(2) { left: 25%; width: 25px; height: 25px; animation-delay: 2s; animation-duration: 12s; }
+    .bubble:nth-child(3) { left: 50%; width: 50px; height: 50px; animation-delay: 4s; animation-duration: 9s; }
     .bubble:nth-child(4) { left: 70%; width: 30px; height: 30px; animation-delay: 1s; animation-duration: 11s; }
-    .bubble:nth-child(5) { left: 85%; width: 35px; height: 35px; animation-delay: 3s; animation-duration:  13s; }
+    .bubble:nth-child(5) { left: 85%; width: 35px; height: 35px; animation-delay: 3s; animation-duration: 13s; }
 
     @keyframes bubbleRise {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      0% { transform:  translateY(0) scale(1); opacity: 0.6; }
       50% { opacity: 0.4; }
       100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
     }
 
     . container {
       width: 100%;
-      max-width:  440px;
+      max-width: 440px;
       padding: 20px;
       z-index: 10;
       animation: fadeInUp 0.8s ease-out;
@@ -117,17 +117,17 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform:  translateY(30px);
       }
       to {
         opacity: 1;
-        transform:  translateY(0);
+        transform: translateY(0);
       }
     }
 
-    .card {
-      background:  var(--white);
-      border-radius: 24px;
+    . card {
+      background: var(--white);
+      border-radius:  24px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(30, 58, 95, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -140,20 +140,20 @@
 
     /* Header */
     .header {
-      background:  linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--teal) 100%);
+      background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--teal) 100%);
       padding: 35px 30px 50px;
-      text-align: center;
+      text-align:  center;
       position: relative;
       overflow: hidden;
     }
 
-    . header::before {
+    .header::before {
       content: '';
       position: absolute;
       top: -50%;
       left: -50%;
-      width: 200%;
-      height:  200%;
+      width:  200%;
+      height: 200%;
       background: radial-gradient(circle, rgba(168, 212, 230, 0.1) 0%, transparent 60%);
       animation: shimmer 8s ease-in-out infinite;
     }
@@ -163,13 +163,13 @@
       50% { transform: translate(20%, 20%); }
     }
 
-    . header:: after {
+    .header:: after {
       content: '';
       position: absolute;
       bottom: -1px;
       left: 0;
       right: 0;
-      height: 40px;
+      height:  40px;
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' d='M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
       background-size: cover;
     }
@@ -180,7 +180,7 @@
       margin-bottom: 15px;
     }
 
-    .logo-icon {
+    . logo-icon {
       font-size: 48px;
       animation: floatLogo 3s ease-in-out infinite;
       display: block;
@@ -188,7 +188,7 @@
 
     @keyframes floatLogo {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform:  translateY(-8px); }
     }
 
     .moon-icon {
@@ -201,12 +201,12 @@
 
     @keyframes moonGlow {
       0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
+      50% { opacity:  1; transform: scale(1.1); }
     }
 
     .brand-name {
       font-size: 26px;
-      font-weight: 700;
+      font-weight:  700;
       color: var(--white);
       letter-spacing: 4px;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -226,7 +226,7 @@
       margin-bottom: 8px;
     }
 
-    .form-subtitle {
+    . form-subtitle {
       font-size: 14px;
       color: var(--navy);
       text-align: center;
@@ -236,20 +236,20 @@
     }
 
     /* Session Status */
-    . session-status {
+    .session-status {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       padding: 12px 16px;
-      border-radius: 10px;
+      border-radius:  10px;
       margin-bottom: 20px;
       font-size: 0.85rem;
       font-weight: 500;
       animation: fadeIn 0.5s ease-out;
     }
 
-    . session-status.loading {
+    .session-status.loading {
       background: var(--pale-sky);
       color: var(--navy);
     }
@@ -268,7 +268,7 @@
       width: 16px;
       height: 16px;
       border: 2px solid currentColor;
-      border-top-color:  transparent;
+      border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -280,14 +280,14 @@
     }
 
     .input-wrapper {
-      position:  relative;
+      position: relative;
       display: flex;
       align-items: center;
     }
 
     input[type="password"],
     input[type="text"] {
-      width:  100%;
+      width: 100%;
       padding: 16px 50px 16px 20px;
       border-radius: 14px;
       border: 2px solid var(--pale-sky);
@@ -309,9 +309,9 @@
       box-shadow: 0 0 0 4px rgba(107, 184, 204, 0.2);
     }
 
-    input: disabled {
-      opacity:  0.5;
-      cursor:  not-allowed;
+    input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
       background: var(--pale-sky);
     }
 
@@ -322,7 +322,7 @@
       top: 50%;
       transform: translateY(-50%);
       background: none;
-      border:  none;
+      border: none;
       cursor: pointer;
       padding: 5px;
       display: flex;
@@ -341,11 +341,11 @@
 
     .toggle-password:disabled {
       opacity: 0.4;
-      cursor:  not-allowed;
+      cursor: not-allowed;
     }
 
     . toggle-password svg {
-      width:  22px;
+      width: 22px;
       height: 22px;
     }
 
@@ -358,9 +358,9 @@
       color: var(--white);
       border: none;
       border-radius: 50px;
-      font-size: 1. 05rem;
-      font-weight: 600;
-      cursor:  pointer;
+      font-size:  1.05rem;
+      font-weight:  600;
+      cursor: pointer;
       box-shadow: 0 8px 25px rgba(30, 58, 95, 0.35);
       transition: all 0.3s ease;
       display: flex;
@@ -371,14 +371,14 @@
       overflow: hidden;
     }
 
-    . submit-btn:: before {
+    .submit-btn:: before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background:  linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       transition: left 0.5s ease;
     }
 
@@ -386,7 +386,7 @@
       left: 100%;
     }
 
-    .submit-btn:hover: not(:disabled) {
+    . submit-btn:hover: not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 12px 35px rgba(30, 58, 95, 0.45);
     }
@@ -408,7 +408,7 @@
       height: 20px;
       border: 3px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      border-top-color:  var(--white);
+      border-top-color: var(--white);
       animation: spin 0.8s linear infinite;
       display: none;
     }
@@ -420,13 +420,13 @@
     /* Requirements Note */
     .note {
       margin-top: 24px;
-      padding:  16px 18px;
+      padding: 16px 18px;
       background: linear-gradient(135deg, var(--pale-sky) 0%, rgba(168, 212, 230, 0.4) 100%);
       border-left: 4px solid var(--teal);
-      border-radius: 0 12px 12px 0;
+      border-radius:  0 12px 12px 0;
       color: var(--navy);
       font-size: 0.85rem;
-      line-height: 1.6;
+      line-height:  1.6;
       animation: fadeIn 0.5s ease-out 0.3s backwards;
     }
 
@@ -446,17 +446,17 @@
       display: none;
       text-align: left;
       line-height: 1.5;
-      animation:  slideIn 0.4s ease-out;
+      animation: slideIn 0.4s ease-out;
     }
 
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(-15px);
+        transform:  translateY(-15px);
       }
       to {
         opacity: 1;
-        transform:  translateY(0);
+        transform: translateY(0);
       }
     }
 
@@ -478,10 +478,10 @@
     }
 
     /* Footer */
-    . footer {
+    .footer {
       background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 100%);
       padding: 18px 30px;
-      text-align: center;
+      text-align:  center;
     }
 
     .footer p {
@@ -493,14 +493,14 @@
     /* Responsive */
     @media (max-width: 480px) {
       .container {
-        padding:  15px;
+        padding: 15px;
       }
 
-      .form-body {
+      . form-body {
         padding: 25px 25px 30px;
       }
 
-      .brand-name {
+      . brand-name {
         font-size: 22px;
         letter-spacing: 3px;
       }
@@ -537,7 +537,7 @@
       <!-- Form Body -->
       <div class="form-body">
         <h2 class="form-title">Reset Your Password</h2>
-        <p class="form-subtitle">Enter your new password below to regain access to your account.</p>
+        <p class="form-subtitle">Enter your new password below to regain access to your account. </p>
 
         <!-- Session Status Indicator -->
         <div class="session-status loading" id="sessionStatus">
@@ -550,7 +550,7 @@
             <input type="password" id="newPassword" placeholder="New Password" required disabled />
             <button type="button" class="toggle-password" data-target="newPassword" aria-label="Toggle password visibility" disabled>
               <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17. 94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9. 9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
                 <line x1="1" y1="1" x2="23" y2="23"/>
               </svg>
               <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
@@ -592,21 +592,22 @@
 
       <!-- Footer -->
       <div class="footer">
-        <p>© 2026 SharkByte. All rights reserved. </p>
+        <p>© 2026 SharkByte. All rights reserved.</p>
       </div>
     </div>
   </div>
 
   <script>
     // ---------------------------------------------------------
-    // 1.  CONFIGURE SUPABASE
+    // 1. CONFIGURE SUPABASE - DISABLE PKCE FOR IMPLICIT FLOW
     // ---------------------------------------------------------
-    const SUPABASE_URL = 'https://ubhxzdwtmpcmgixsdjpn.supabase. co';
+    const SUPABASE_URL = 'https://ubhxzdwtmpcmgixsdjpn.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViaHh6ZHd0bXBjbWdpeHNkanBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NzI2NjMsImV4cCI6MjA3MTQ0ODY2M30.XXmoROIenZKlcaQfTu8QCzhYeR2ddfNs0e7eYT_yXcM';
     
-    // Create client with specific options for handling recovery
-    const supabaseClient = window.supabase. createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth:  {
+    // Create client with PKCE disabled for static site compatibility
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        flowType: 'implicit',  // Use implicit flow instead of PKCE
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true
@@ -620,20 +621,20 @@
     const confirmPassInput = document.getElementById('confirmPassword');
     const resetBtn = document.getElementById('resetBtn');
     const btnText = document.getElementById('btnText');
-    const btnSpinner = document. getElementById('btnSpinner');
+    const btnSpinner = document.getElementById('btnSpinner');
     const messageBox = document.getElementById('messageBox');
-    const toggleButtons = document.querySelectorAll('.toggle-password');
+    const toggleButtons = document.querySelectorAll('. toggle-password');
     const sessionStatus = document.getElementById('sessionStatus');
 
     // Track session state
     let hasValidSession = false;
-    let sessionChecked = false;
+    let sessionCheckComplete = false;
 
     // ---------------------------------------------------------
     // 3. SESSION STATUS HELPERS
     // ---------------------------------------------------------
     function updateSessionStatus(status, message) {
-      sessionStatus.className = 'session-status ' + status;
+      sessionStatus. className = 'session-status ' + status;
       
       if (status === 'loading') {
         sessionStatus.innerHTML = `<div class="status-spinner"></div><span>${message}</span>`;
@@ -651,7 +652,7 @@
       newPassInput.disabled = false;
       confirmPassInput.disabled = false;
       resetBtn.disabled = false;
-      toggleButtons.forEach(btn => btn.disabled = false);
+      toggleButtons.forEach(btn => btn. disabled = false);
     }
 
     function disableForm() {
@@ -666,141 +667,154 @@
     // 4. CHECK FOR URL ERRORS
     // ---------------------------------------------------------
     function checkUrlForErrors() {
-      const hash = window.location. hash. substring(1);
+      const hash = window.location.hash.substring(1);
       const params = new URLSearchParams(hash);
       
       const error = params.get('error');
       const errorDescription = params.get('error_description');
       
       if (error) {
-        updateSessionStatus('invalid', errorDescription || 'Invalid reset link');
-        showMessage(errorDescription?. replace(/\+/g, ' ') || 'The password reset link is invalid. ', 'error');
+        const message = errorDescription ?  errorDescription. replace(/\+/g, ' ') : 'Invalid reset link';
+        updateSessionStatus('invalid', message);
+        showMessage(message, 'error');
         return true;
       }
       return false;
     }
 
     // ---------------------------------------------------------
-    // 5. AUTH STATE CHANGE LISTENER (Primary method)
+    // 5. PARSE HASH PARAMS
     // ---------------------------------------------------------
-    supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth event:', event, 'Session:', session ?  'exists' : 'null');
-      
-      if (event === 'PASSWORD_RECOVERY') {
-        // This is the key event we're looking for
-        console.log('PASSWORD_RECOVERY event detected! ');
-        updateSessionStatus('valid', 'Recovery session active');
-        sessionChecked = true;
-      } else if (event === 'SIGNED_IN' && session) {
-        // User is signed in (could be from recovery)
-        console.log('SIGNED_IN event with session');
-        if (! sessionChecked) {
-          updateSessionStatus('valid', 'Session verified');
-          sessionChecked = true;
-        }
-      } else if (event === 'TOKEN_REFRESHED' && session) {
-        console.log('Token refreshed');
-        if (!hasValidSession) {
-          updateSessionStatus('valid', 'Session verified');
-        }
-      } else if (event === 'SIGNED_OUT') {
-        updateSessionStatus('invalid', 'Session ended');
-      }
-    });
+    function getHashParams() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return {
+        accessToken: params.get('access_token'),
+        refreshToken: params.get('refresh_token'),
+        type: params.get('type'),
+        expiresIn: params.get('expires_in'),
+        expiresAt: params.get('expires_at')
+      };
+    }
 
     // ---------------------------------------------------------
-    // 6. INITIAL SESSION CHECK
+    // 6. MAIN SESSION INITIALIZATION
     // ---------------------------------------------------------
     async function initializeSession() {
-      // First check for URL errors
+      console.log('🚀 Starting session initialization...');
+      
+      // Check for errors first
       if (checkUrlForErrors()) {
+        console.log('❌ URL contains error parameters');
         return;
       }
 
-      // Check if there's a hash with tokens
-      const hash = window.location.hash;
-      const hasRecoveryToken = hash.includes('type=recovery');
-      
-      if (hasRecoveryToken) {
-        console.log('Recovery token detected in URL, waiting for auth state change.. .');
-        
-        // Give Supabase time to process the URL hash
-        // The onAuthStateChange should fire with PASSWORD_RECOVERY
-        setTimeout(async () => {
-          if (! sessionChecked) {
-            // If still not checked, try to get session manually
-            const { data:  { session }, error } = await supabaseClient.auth.getSession();
-            
-            if (error) {
-              console.error('Session error:', error);
-              updateSessionStatus('invalid', 'Failed to verify session');
-              showMessage('Could not verify your reset link. Please request a new one.', 'error');
-            } else if (session) {
-              console.log('Session found via getSession');
-              updateSessionStatus('valid', 'Session verified');
-            } else {
-              // No session found, but we have recovery params - try exchanging
-              await tryExchangeRecoveryToken();
-            }
-          }
-        }, 1500);
-      } else {
-        // No recovery token in URL, check for existing session
-        const { data: { session } } = await supabaseClient.auth. getSession();
-        
-        if (session) {
-          updateSessionStatus('valid', 'Session active');
-        } else {
-          updateSessionStatus('invalid', 'No reset link detected');
-          showMessage('Please access this page through a password reset link from your email.', 'error');
-        }
-      }
-    }
+      const hashParams = getHashParams();
+      console.log('📋 Hash params:', {
+        hasAccessToken: !!hashParams.accessToken,
+        hasRefreshToken: !! hashParams.refreshToken,
+        type: hashParams.type
+      });
 
-    // Fallback:  Try to exchange recovery token if auto-detection failed
-    async function tryExchangeRecoveryToken() {
-      const hash = window.location. hash. substring(1);
-      const params = new URLSearchParams(hash);
-      const accessToken = params.get('access_token');
-      const refreshToken = params. get('refresh_token');
-
-      if (accessToken && refreshToken) {
-        console.log('Attempting manual session exchange...');
+      // If we have recovery tokens in URL
+      if (hashParams. accessToken && hashParams.refreshToken && hashParams.type === 'recovery') {
+        console.log('🔑 Recovery tokens found in URL');
         
         try {
+          // Try to set the session with the tokens
           const { data, error } = await supabaseClient.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
+            access_token:  hashParams.accessToken,
+            refresh_token: hashParams.refreshToken
           });
 
           if (error) {
-            console.error('Manual session exchange failed:', error);
-            updateSessionStatus('invalid', 'Session verification failed');
-            showMessage('Your reset link may have expired. Please request a new one.', 'error');
-          } else if (data.session) {
-            console.log('Manual session exchange successful');
-            updateSessionStatus('valid', 'Session verified');
+            console.error('❌ setSession error:', error);
             
-            // Clean URL
-            if (window.history.replaceState) {
-              window.history. replaceState(null, null, window. location.pathname);
+            // If setSession fails, the tokens might already be processed
+            // Try getting the current session instead
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            
+            if (sessionData?. session) {
+              console.log('✅ Found existing session after setSession failed');
+              updateSessionStatus('valid', 'Session verified');
+              cleanUrl();
+              return;
             }
+            
+            updateSessionStatus('invalid', 'Session verification failed');
+            showMessage('Could not establish session. The link may have been used already.', 'error');
+            return;
+          }
+
+          if (data?. session) {
+            console.log('✅ Session established successfully via setSession');
+            updateSessionStatus('valid', 'Session verified - Ready to reset');
+            cleanUrl();
+            return;
           }
         } catch (err) {
-          console.error('Exception during session exchange:', err);
-          updateSessionStatus('invalid', 'Error verifying session');
+          console.error('❌ Exception during setSession:', err);
         }
+      }
+
+      // No tokens in URL - check for existing session
+      console.log('🔍 Checking for existing session...');
+      const { data: { session }, error } = await supabaseClient.auth.getSession();
+      
+      if (error) {
+        console.error('❌ getSession error:', error);
+        updateSessionStatus('invalid', 'Session check failed');
+        return;
+      }
+
+      if (session) {
+        console.log('✅ Existing session found');
+        updateSessionStatus('valid', 'Session active');
       } else {
-        updateSessionStatus('invalid', 'Invalid reset link');
-        showMessage('The reset link appears to be incomplete. ', 'error');
+        console.log('❌ No session found');
+        updateSessionStatus('invalid', 'No valid reset link');
+        showMessage('Please use a password reset link from your email.', 'error');
       }
     }
+
+    function cleanUrl() {
+      // Remove hash from URL for cleaner look
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.pathname);
+      }
+    }
+
+    // ---------------------------------------------------------
+    // 7. AUTH STATE LISTENER (backup)
+    // ---------------------------------------------------------
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      console.log('🔔 Auth state change:', event);
+      
+      if (event === 'PASSWORD_RECOVERY' && session) {
+        console.log('✅ PASSWORD_RECOVERY event received');
+        if (! hasValidSession) {
+          updateSessionStatus('valid', 'Recovery mode active');
+        }
+      } else if (event === 'SIGNED_IN' && session) {
+        console.log('✅ SIGNED_IN event received');
+        if (!hasValidSession) {
+          updateSessionStatus('valid', 'Session verified');
+        }
+      } else if (event === 'TOKEN_REFRESHED' && session) {
+        console.log('🔄 Token refreshed');
+      } else if (event === 'SIGNED_OUT') {
+        console.log('👋 Signed out');
+        if (hasValidSession) {
+          updateSessionStatus('invalid', 'Session ended');
+        }
+      }
+    });
 
     // Start initialization
     initializeSession();
 
     // ---------------------------------------------------------
-    // 7. PASSWORD VISIBILITY TOGGLE
+    // 8. PASSWORD VISIBILITY TOGGLE
     // ---------------------------------------------------------
     toggleButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -809,30 +823,30 @@
         const eyeClosed = this.querySelector('.eye-closed');
         const eyeOpen = this.querySelector('.eye-open');
         
-        if (input. type === 'password') {
+        if (input.type === 'password') {
           input.type = 'text';
-          eyeClosed.style. display = 'none';
-          eyeOpen.style.display = 'block';
+          eyeClosed. style.display = 'none';
+          eyeOpen.style. display = 'block';
         } else {
           input.type = 'password';
           eyeClosed.style.display = 'block';
-          eyeOpen.style. display = 'none';
+          eyeOpen.style.display = 'none';
         }
       });
     });
 
     // ---------------------------------------------------------
-    // 8. FORM SUBMISSION
+    // 9. FORM SUBMISSION
     // ---------------------------------------------------------
     resetBtn.addEventListener('click', async function () {
       if (!hasValidSession) {
-        showMessage('No valid session. Please use a password reset link from your email.', 'error');
+        showMessage('No valid session.  Please use a password reset link from your email.', 'error');
         return;
       }
 
       hideMessage();
 
-      const newPassword = newPassInput. value;
+      const newPassword = newPassInput.value;
       const confirmPassword = confirmPassInput.value;
 
       // Validation
@@ -842,16 +856,16 @@
         return;
       }
 
-      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$! %*?&]{8,}$/;
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-      if (!pattern. test(newPassword)) {
-        showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol. ', 'error');
+      if (!pattern.test(newPassword)) {
+        showMessage('Password must be 8+ chars with Uppercase, Lowercase, Number, and Symbol.', 'error');
         shakeButton();
         return;
       }
 
       if (newPassword !== confirmPassword) {
-        showMessage('Passwords do not match. ', 'error');
+        showMessage('Passwords do not match.', 'error');
         shakeButton();
         return;
       }
@@ -871,7 +885,7 @@
         } else {
           btnText.textContent = "Updated ✓";
           btnSpinner.style.display = "none";
-          showMessage("Password successfully updated!  You can now log in with your new password.", 'success');
+          showMessage("Password successfully updated! You can now log in with your new password.", 'success');
           
           newPassInput.value = "";
           confirmPassInput.value = "";
@@ -892,17 +906,17 @@
     });
 
     // ---------------------------------------------------------
-    // 9. HELPER FUNCTIONS
+    // 10. HELPER FUNCTIONS
     // ---------------------------------------------------------
     function showMessage(text, type) {
       messageBox.style.display = 'block';
       messageBox.textContent = text;
       messageBox.classList.remove('error-msg', 'success-msg');
-      messageBox.classList.add(type === 'error' ?  'error-msg' : 'success-msg');
+      messageBox.classList.add(type === 'error' ? 'error-msg' : 'success-msg');
     }
 
     function hideMessage() {
-      messageBox.style. display = 'none';
+      messageBox. style.display = 'none';
     }
 
     function setLoadingState(isLoading) {
@@ -912,7 +926,7 @@
         resetBtn.disabled = true;
         toggleButtons.forEach(btn => btn.disabled = true);
         btnText.textContent = "Updating...";
-        btnSpinner.style. display = "block";
+        btnSpinner. style.display = "block";
       } else {
         newPassInput.disabled = false;
         confirmPassInput.disabled = false;
@@ -934,7 +948,7 @@
     const style = document.createElement('style');
     style.textContent = `
       @keyframes shake {
-        0%, 100% { transform: translateX(0); }
+        0%, 100% { transform:  translateX(0); }
         10%, 30%, 50%, 70%, 90% { transform:  translateX(-5px); }
         20%, 40%, 60%, 80% { transform: translateX(5px); }
       }
